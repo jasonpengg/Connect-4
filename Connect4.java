@@ -6,6 +6,8 @@ import java.io.*;
 
 public class Connect4 implements ActionListener, MouseListener, MouseMotionListener{
 	//Properties 
+	calculations calcs = new calculations();
+	
 	JFrame theFrame = new JFrame("graphics!!!");
 	ConnectPanel thePanel = new ConnectPanel();
 	JTextArea chatArea = new JTextArea();
@@ -15,6 +17,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	SuperSocketMaster ssm = null;
 	int intReleasedX = 0;
 	int intReleasedY = 0;
+
 
 	/*
 	HOW THE CODE WILL WORK: 
@@ -39,17 +42,40 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	}
 	public void mouseReleased(MouseEvent evt){
 		//Add a check to see if the player was clicking on a piece beforehand, or else they will place a piece if they click on top 
-		//
-		intReleasedX = evt.getX();
-		intReleasedY = evt.getY();
-		System.out.println(calculations.position(intReleasedX, intReleasedY));
-		thePanel.blnPressed = false;
+		if(thePanel.blnPlaced == true){
+			intReleasedX = evt.getX();
+			intReleasedY = evt.getY();
+			
+			calcs.position(intReleasedX, intReleasedY);
+			//Checks to see if the piece placed is in bounds 
+			if(calcs.position(intReleasedX, intReleasedY) == true){
+				thePanel.intBoard = calcs.place();
+			}
+			int intCount = calcs.getPlayerTurn();
+			System.out.println(intCount);
+			
+			thePanel.blnPlaced = false;
+			thePanel.blnPressed = false;
+		}
+		//BUG fix???
+		thePanel.intDraggedX = -100;
+		thePanel.intDraggedY = -100;
 	}
 	public void mousePressed(MouseEvent evt){
 		thePanel.intPressedX = evt.getX();
 		thePanel.intPressedY = evt.getY();
-		System.out.println("Pressed = " +thePanel.intPressedX +" "+ thePanel.intPressedY);
+		System.out.println(calcs.getPlayer());
+		if(calcs.getPlayer().equals("RED")){
+			System.out.println("RED");
+			thePanel.blnRed = true;
+			thePanel.blnYellow = false;
+		}else if(calcs.getPlayer().equals("YELLOW")){
+			System.out.println("YELLOW");
+			thePanel.blnYellow = true;
+			thePanel.blnRed = false;
+		}
 		thePanel.blnPressed = true;
+		System.out.println("Pressed = " +thePanel.intPressedX +" "+ thePanel.intPressedY);
 	}
 	public void mouseClicked(MouseEvent evt){
 		
@@ -63,6 +89,10 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	// Constructor
 	//add timer to the panel to repaint 
 	public Connect4(){
+		//Initiallizing the Game Setup 
+		thePanel.intBoard = calcs.getBoard();
+		
+		
 		thePanel.setPreferredSize(new Dimension(1280, 720));
 		thePanel.setLayout(null);
 		theFrame.setContentPane(thePanel);

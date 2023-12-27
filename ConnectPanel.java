@@ -19,14 +19,19 @@ public class ConnectPanel extends JPanel{
 	int intDiffX = 0;
 	int intDiffY = 0;
 	boolean blnDiff = true;
-	boolean blnPressed = true;
+	boolean blnPressed = false;
+	boolean blnRed = true;
+	boolean blnYellow = true;
+	boolean blnPlaced = false;
 	BufferedImage imgRed = null;
 	BufferedImage imgYellow = null;
-	
+	int intBoard[][];
 	
 	// Methods
 	// override how JComponent is painted 
 	// Set the Red and Yellow pieces to coordinates 
+	
+	
 	public void paintComponent(Graphics g){
 		g.setColor(Color.LIGHT_GRAY);
 		g.fillRect(0,0,1280,720);
@@ -46,19 +51,37 @@ public class ConnectPanel extends JPanel{
 			intX = intX +110;
 			for(int intCount2 = 0; intCount2 < 6; intCount2++){
 				intY = intY + 100;
-				g.fillOval(intX,intY, 90, 90);
+				if(intBoard[intCount][intCount2] == 0){
+					g.setColor(Color.WHITE);
+					g.fillOval(intX,intY, 90, 90);
+				}else if(intBoard[intCount][intCount2] == 1){
+					g.setColor(Color.RED);
+					g.fillOval(intX,intY, 90, 90);
+				}else if(intBoard[intCount][intCount2] == 2){
+					g.setColor(Color.YELLOW);
+					g.fillOval(intX,intY, 90, 90);
+				}
+				
 			}
 			intY = 10;
 		}
 
 		//RED
-		if( intPressedX >= (intRedX) && intPressedX <= (intRedX +90)&&intPressedY >= intRedY&& intPressedY <= (intRedY + 90) && blnPressed == true){
+		if(intPressedX >= (intRedX) && intPressedX <= (intRedX +90)&&intPressedY >= intRedY&& intPressedY <= (intRedY + 90) && blnPressed == true && blnRed == true){
+			System.out.println("RED placed");
 			intDiffX = intPressedX - intRedX;
 			intDiffY = intPressedY - intRedY;
-			g.setColor(Color.RED);
 			g.drawImage(imgRed, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
-			blnDiff = false;
+			blnPlaced = true;
 		}
+		if(intPressedX >= (intYellowX) && intPressedX <= (intYellowX +90)&&intPressedY >= intYellowY&& intPressedY <= (intYellowY + 90) && blnPressed == true && blnYellow == true){
+			System.out.println("Yellow placed");
+			intDiffX = intPressedX - intYellowX;
+			intDiffY = intPressedY - intYellowY;
+			g.drawImage(imgYellow, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
+			blnPlaced = true;
+		}
+		//YELLOW
 		
 		
 		
