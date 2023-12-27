@@ -16,18 +16,32 @@ public class ConnectPanel extends JPanel{
 	int intRedY = 210;
 	int intYellowX = 390;
 	int intYellowY = 110;
+	int intDiffX = 0;
+	int intDiffY = 0;
+	boolean blnDiff = true;
+	boolean blnPressed = true;
+	BufferedImage imgRed = null;
+	BufferedImage imgYellow = null;
+	
 	
 	// Methods
 	// override how JComponent is painted 
 	// Set the Red and Yellow pieces to coordinates 
 	public void paintComponent(Graphics g){
-	g.setColor(Color.BLUE);
-	g.fillRect(500,100,770,610);
-	
-	g.setColor(Color.WHITE);
-	int intX = 400;
-	int intY = 10;
-	if(blnPrintGrid = true){
+		g.setColor(Color.LIGHT_GRAY);
+		g.fillRect(0,0,1280,720);
+		g.setColor(Color.BLUE);
+		g.fillRect(500,100,770,610);
+		
+		g.setColor(Color.RED);
+		g.fillOval(intRedX,intRedY, 90, 90);
+		g.setColor(Color.YELLOW);
+		g.fillOval(intYellowX,intYellowY, 90, 90);
+		
+		//prints Grid
+		g.setColor(Color.WHITE);
+		int intX = 400;
+		int intY = 10;
 		for (int intCount = 0; intCount < 7; intCount++){
 			intX = intX +110;
 			for(int intCount2 = 0; intCount2 < 6; intCount2++){
@@ -36,37 +50,40 @@ public class ConnectPanel extends JPanel{
 			}
 			intY = 10;
 		}
-		blnPrintGrid = false;
-	}
-	//RED
-	System.out.println(intPressedX);
-	if(intPressedX > (390) && intPressedX < (intRedX +90) && intPressedY > intRedY && intPressedY < (intRedY + 90)){
-		System.out.println("true");
-		g.setColor(Color.BLUE);
-		g.fillRect(500,100,770,610);
+
+		//RED
+		if( intPressedX >= (intRedX) && intPressedX <= (intRedX +90)&&intPressedY >= intRedY&& intPressedY <= (intRedY + 90) && blnPressed == true){
+			intDiffX = intPressedX - intRedX;
+			intDiffY = intPressedY - intRedY;
+			g.setColor(Color.RED);
+			g.drawImage(imgRed, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
+			blnDiff = false;
+		}
 		
-	}
-	
-	g.setColor(Color.RED);
-	g.fillOval(intRedX,intRedY, 90, 90);
-	g.setColor(Color.YELLOW);
-	g.fillOval(intYellowX,intYellowY, 90, 90);
-	
-	
-	g.setColor(Color.GRAY);
-	g.fillRect(500,0,1,800);
-	g.fillRect(610,0,1,800);
-	g.fillRect(720,0,1,800);
-	g.fillRect(830,0,1,800);
-	g.fillRect(940,0,1,800);
-	g.fillRect(1050,0,1,800);
-	g.fillRect(1160,0,1,800);
-	g.fillRect(1270,0,1,800);
-	}
+		
+		
+		g.setColor(Color.GRAY);
+		g.fillRect(500,0,1,800);
+		g.fillRect(610,0,1,800);
+		g.fillRect(720,0,1,800);
+		g.fillRect(830,0,1,800);
+		g.fillRect(940,0,1,800);
+		g.fillRect(1050,0,1,800);
+		g.fillRect(1160,0,1,800);
+		g.fillRect(1270,0,1,800);
+		}
 	//Constructor
 	public ConnectPanel (){
-
-		
+		try{
+			imgRed = ImageIO.read(new File("red.png"));
+		}catch (IOException e){
+			System.out.println("cannot load image");
+		}
+		try{
+			imgYellow = ImageIO.read(new File("yellow.png"));
+		}catch (IOException e){
+			System.out.println("cannot load image");
+		}
 	}
 }
 /* IDEAS FOR HOW THE GRID IS ORGANIZED

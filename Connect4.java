@@ -13,7 +13,8 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 
 	Timer theTimer = new Timer(1000/30, this);
 	SuperSocketMaster ssm = null;
-
+	int intReleasedX = 0;
+	int intReleasedY = 0;
 
 	/*
 	HOW THE CODE WILL WORK: 
@@ -28,7 +29,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	public void mouseDragged(MouseEvent evt){
 		thePanel.intDraggedX = evt.getX();
 		thePanel.intDraggedY = evt.getY();
-		//System.out.println("Drag = " + thePanel.intDraggedX +" "+thePanel.intDraggedY);
+
 	}
 	public void mouseExited(MouseEvent evt){
 	
@@ -37,19 +38,27 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	
 	}
 	public void mouseReleased(MouseEvent evt){
-
+		//Add a check to see if the player was clicking on a piece beforehand, or else they will place a piece if they click on top 
+		//
+		intReleasedX = evt.getX();
+		intReleasedY = evt.getY();
+		System.out.println(calculations.position(intReleasedX, intReleasedY));
+		thePanel.blnPressed = false;
 	}
 	public void mousePressed(MouseEvent evt){
 		thePanel.intPressedX = evt.getX();
-		thePanel.intPressedY = evt.getX();
+		thePanel.intPressedY = evt.getY();
 		System.out.println("Pressed = " +thePanel.intPressedX +" "+ thePanel.intPressedY);
-
+		thePanel.blnPressed = true;
 	}
 	public void mouseClicked(MouseEvent evt){
 		
 	}
 	public void actionPerformed(ActionEvent evt){
-
+		if(evt.getSource() == theTimer){
+			thePanel.repaint();
+		}
+		
 	}
 	// Constructor
 	//add timer to the panel to repaint 
@@ -63,8 +72,8 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		thePanel.add(theScroll);
 
 
-		theFrame.addMouseListener(this);
-		theFrame.addMouseMotionListener(this);
+		thePanel.addMouseListener(this);
+		thePanel.addMouseMotionListener(this);
 		
 		thePanel.repaint();
 		theFrame.pack();
