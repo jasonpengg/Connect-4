@@ -72,6 +72,59 @@ class calculations{
 			strPlayer = "YELLOW";
 		}
 	}
+	//Checks array for 4 in a row Horizontal
+	public String HorizontalCheckWin(){
+		// intCount2 = horizontal array 
+		String strRow ="    ";
+		int intLength = 0;
+		String strCheck ="";
+		for(int intCount = 0; intCount <6; intCount++){
+			strCheck ="";
+			strRow = "    ";
+			for(int intCount2 = 0; intCount2 <7; intCount2++){
+				strRow = strRow + intBoard[intCount2][intCount];
+				intLength = strRow.length();
+				for(int intCount3 = 0; intCount3 < intLength-4; intCount3++){
+					strCheck = strRow.substring(intCount3, intCount3 + 4);
+					if (strCheck.equals("1111")){
+						return "1";
+					}else if(strCheck.equals("2222")){
+						return "2";
+					}
+				}
+			}
+			System.out.print("\n");
+		}
+		
+		return "0";
+	}
+	//Checks array for 4 in a row Vertical
+	public String VerticalCheckWin(){
+		// intCount2 = horizontal array 
+		String strRow ="    ";
+		int intLength = 0;
+		String strCheck ="";
+		for(int intCount = 0; intCount <7; intCount++){
+			strCheck ="";
+			strRow = "    ";
+			for(int intCount2 = 0; intCount2 <6; intCount2++){
+				strRow = strRow + intBoard[intCount][intCount2];
+				intLength = strRow.length();
+				for(int intCount3 = 0; intCount3 < intLength-4; intCount3++){
+					strCheck = strRow.substring(intCount3, intCount3 + 4);
+					if (strCheck.equals("1111")){
+						return "1";
+					}else if(strCheck.equals("2222")){
+						return "2";
+					}
+				}
+			}
+			
+		}
+		return "0";
+	}
+	//Checks for Diagonal 
+	
 	//Contructor
 	public calculations(){
 	}

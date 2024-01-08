@@ -50,12 +50,15 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			//Checks to see if the piece placed is in bounds 
 			if(calcs.position(intReleasedX, intReleasedY) == true){
 				thePanel.intBoard = calcs.place();
+				System.out.println("winner is H " +calcs.HorizontalCheckWin());
+				System.out.println("winner is V " +calcs.VerticalCheckWin());
 			}
 			int intCount = calcs.getPlayerTurn();
 			System.out.println(intCount);
 			
 			thePanel.blnPlaced = false;
 			thePanel.blnPressed = false;
+			calcs.printBoard();
 		}
 		//BUG fix???
 		thePanel.intDraggedX = -100;
