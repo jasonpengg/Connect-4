@@ -52,6 +52,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 				thePanel.intBoard = calcs.place();
 				System.out.println("winner is H " +calcs.HorizontalCheckWin());
 				System.out.println("winner is V " +calcs.VerticalCheckWin());
+				System.out.println("winner is D " +calcs.DiagonalCheckWin());
 			}
 			int intCount = calcs.getPlayerTurn();
 			System.out.println(intCount);

@@ -78,14 +78,14 @@ class calculations{
 		String strRow ="    ";
 		int intLength = 0;
 		String strCheck ="";
-		for(int intCount = 0; intCount <6; intCount++){
+		for(int intRow = 0; intRow <6; intRow++){
 			strCheck ="";
 			strRow = "    ";
-			for(int intCount2 = 0; intCount2 <7; intCount2++){
-				strRow = strRow + intBoard[intCount2][intCount];
+			for(int intColumn = 0; intColumn <7; intColumn++){
+				strRow = strRow + intBoard[intColumn][intRow];
 				intLength = strRow.length();
-				for(int intCount3 = 0; intCount3 < intLength-4; intCount3++){
-					strCheck = strRow.substring(intCount3, intCount3 + 4);
+				for(int intCount = 0; intCount < intLength-4; intCount++){
+					strCheck = strRow.substring(intCount, intCount + 4);
 					if (strCheck.equals("1111")){
 						return "1";
 					}else if(strCheck.equals("2222")){
@@ -93,7 +93,6 @@ class calculations{
 					}
 				}
 			}
-			System.out.print("\n");
 		}
 		
 		return "0";
@@ -104,14 +103,15 @@ class calculations{
 		String strRow ="    ";
 		int intLength = 0;
 		String strCheck ="";
-		for(int intCount = 0; intCount <7; intCount++){
+		for(int intColumn = 0; intColumn <7; intColumn++){
 			strCheck ="";
 			strRow = "    ";
-			for(int intCount2 = 0; intCount2 <6; intCount2++){
-				strRow = strRow + intBoard[intCount][intCount2];
+			for(int intRow = 0; intRow <6; intRow++){
+				strRow = strRow + intBoard[intColumn][intRow];
 				intLength = strRow.length();
-				for(int intCount3 = 0; intCount3 < intLength-4; intCount3++){
-					strCheck = strRow.substring(intCount3, intCount3 + 4);
+				
+				for(int intCount = 0; intCount < intLength-4; intCount++){
+					strCheck = strRow.substring(intCount, intCount+ 4);
 					if (strCheck.equals("1111")){
 						return "1";
 					}else if(strCheck.equals("2222")){
@@ -119,12 +119,40 @@ class calculations{
 					}
 				}
 			}
-			
 		}
 		return "0";
 	}
 	//Checks for Diagonal 
-	
+	public String DiagonalCheckWin() {
+		// Check for diagonal win from bottom-left to top-right
+		String strInRow = "    ";
+		for (int intColumn = 0; intColumn < 4; intColumn++) {
+			strInRow = "";
+		for (int intRow = 0; intRow < 3; intRow++) {
+				strInRow = "" + intBoard[intColumn][intRow]+intBoard[intColumn+1][intRow+1]+intBoard[intColumn+2][intRow+2]+intBoard[intColumn+3][intRow+3];
+				if (strInRow.equals("1111")){
+					return "1";
+				}else if (strInRow.equals("2222")){
+					return "2";
+				}
+			}
+		}
+
+		//Check for diagonal win from bottom-right to top-left
+		for (int intColumn = 3; intColumn < 7; intColumn++) {
+			strInRow = "";
+			for (int intRow = 0; intRow < 3; intRow++) {
+				strInRow = "";
+				strInRow = "" + intBoard[intColumn][intRow]+intBoard[intColumn-1][intRow+1]+intBoard[intColumn-2][intRow+2]+intBoard[intColumn-3][intRow+3];
+			if (strInRow.equals("1111")){
+					return "1";
+				}else if (strInRow.equals("2222")){
+					return "2";
+				}
+			}
+		}
+		return "0"; // No diagonal win found
+	}
 	//Contructor
 	public calculations(){
 	}
