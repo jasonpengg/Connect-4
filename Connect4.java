@@ -7,16 +7,29 @@ import java.io.*;
 public class Connect4 implements ActionListener, MouseListener, MouseMotionListener{
 	//Properties 
 	calculations calcs = new calculations();
-	
 	JFrame theFrame = new JFrame("graphics!!!");
 	ConnectPanel thePanel = new ConnectPanel();
+	JPanel themePanel = new JPanel();
+	
 	JTextArea chatArea = new JTextArea();
 	JScrollPane theScroll = new JScrollPane(chatArea);
 
+	JMenuBar theBar = new JMenuBar();
+	
+	JButton mainMenu = new JButton("Home");
+	JButton themeMenu = new JButton("Theme");
+	JButton theme1 = new JButton("Original");
+	JButton theme2 = new JButton("Christmas");
+	JButton theme3 = new JButton("Space");
+
 	Timer theTimer = new Timer(1000/30, this);
 	SuperSocketMaster ssm = null;
+
+	
+	
 	int intReleasedX = 0;
 	int intReleasedY = 0;
+	
 
 
 	/*
@@ -42,6 +55,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	}
 	public void mouseReleased(MouseEvent evt){
 		//Add a check to see if the player was clicking on a piece beforehand, or else they will place a piece if they click on top 
+		
 		if(thePanel.blnPlaced == true){
 			intReleasedX = evt.getX();
 			intReleasedY = evt.getY();
@@ -54,8 +68,8 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 				System.out.println("winner is V " +calcs.VerticalCheckWin());
 				System.out.println("winner is D " +calcs.DiagonalCheckWin());
 			}
-			int intCount = calcs.getPlayerTurn();
-			System.out.println(intCount);
+			thePanel.intTurn = calcs.getPlayerTurn();
+			System.out.println(calcs.getPlayerTurn());
 			
 			thePanel.blnPlaced = false;
 			thePanel.blnPressed = false;
@@ -85,9 +99,22 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		
 	}
 	public void actionPerformed(ActionEvent evt){
+		if(evt.getSource() == mainMenu){
+			theFrame.setContentPane(thePanel);
+			theFrame.pack();
+			theFrame.repaint();
+		}
+		if(evt.getSource() == themeMenu){
+			theFrame.setContentPane(themePanel);
+			theFrame.pack();
+			theFrame.repaint();
+		}
+		
+		
 		if(evt.getSource() == theTimer){
 			thePanel.repaint();
 		}
+		
 		
 	}
 	// Constructor
@@ -95,11 +122,11 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	public Connect4(){
 		//Initiallizing the Game Setup 
 		thePanel.intBoard = calcs.getBoard();
-		
-		
 		thePanel.setPreferredSize(new Dimension(1280, 720));
 		thePanel.setLayout(null);
 		theFrame.setContentPane(thePanel);
+		
+		//----------------------------------------- GAME PANEL -----------------------------------------------//
 		
 		theScroll.setSize(480,400);
 		theScroll.setLocation(10,310);
@@ -108,6 +135,28 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 
 		thePanel.addMouseListener(this);
 		thePanel.addMouseMotionListener(this);
+		// ------------------------------------------------ THEME PANEL --------------------------------------------//
+		themePanel.setLayout(null);
+		themePanel.setPreferredSize(new Dimension(1280, 720));
+		themePanel.setBackground(Color.WHITE);
+		
+		theme1.setSize(300,200);
+		theme1.setLocation(490, 100);
+		theme1.addActionListener(this);
+		themePanel.add(theme1);
+		
+		
+		
+		//----------------------------------------------- GENERAL FRAME ----------------------------------------------//
+		
+		//Frame and Menu Bar
+		theFrame.setJMenuBar(theBar);
+		theBar.add(mainMenu);
+		theBar.add(themeMenu);
+		
+		//ActionListener
+		mainMenu.addActionListener(this);
+		themeMenu.addActionListener(this);
 		
 		thePanel.repaint();
 		theFrame.pack();

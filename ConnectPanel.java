@@ -25,6 +25,8 @@ public class ConnectPanel extends JPanel{
 	boolean blnPlaced = false;
 	BufferedImage imgRed = null;
 	BufferedImage imgYellow = null;
+	BufferedImage imgArrow = null;
+	int intTurn = 0;
 	int intBoard[][];
 	
 	// Methods
@@ -68,20 +70,27 @@ public class ConnectPanel extends JPanel{
 
 		//RED
 		if(intPressedX >= (intRedX) && intPressedX <= (intRedX +90)&&intPressedY >= intRedY&& intPressedY <= (intRedY + 90) && blnPressed == true && blnRed == true){
-			System.out.println("RED placed");
+			//System.out.println("RED placed");
 			intDiffX = intPressedX - intRedX;
 			intDiffY = intPressedY - intRedY;
 			g.drawImage(imgRed, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
 			blnPlaced = true;
 		}
+		//Yellow
 		if(intPressedX >= (intYellowX) && intPressedX <= (intYellowX +90)&&intPressedY >= intYellowY&& intPressedY <= (intYellowY + 90) && blnPressed == true && blnYellow == true){
-			System.out.println("Yellow placed");
+			//System.out.println("Yellow placed");
 			intDiffX = intPressedX - intYellowX;
 			intDiffY = intPressedY - intYellowY;
 			g.drawImage(imgYellow, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
 			blnPlaced = true;
 		}
-		//YELLOW
+		//Determine turn order 
+		//% 2 = Player 2
+		if(this.intTurn % 2 ==0){
+			g.drawImage(imgArrow, 200 ,220, null);
+		}else if(this.intTurn % 2 ==1){
+			g.drawImage(imgArrow, 200 ,120, null);
+		}
 		
 		
 		
@@ -104,6 +113,11 @@ public class ConnectPanel extends JPanel{
 		}
 		try{
 			imgYellow = ImageIO.read(new File("yellow.png"));
+		}catch (IOException e){
+			System.out.println("cannot load image");
+		}
+		try{
+			imgArrow = ImageIO.read(new File("arrow.png"));
 		}catch (IOException e){
 			System.out.println("cannot load image");
 		}

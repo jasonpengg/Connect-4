@@ -84,7 +84,7 @@ class calculations{
 			for(int intColumn = 0; intColumn <7; intColumn++){
 				strRow = strRow + intBoard[intColumn][intRow];
 				intLength = strRow.length();
-				for(int intCount = 0; intCount < intLength-4; intCount++){
+				for(int intCount = 0; intCount <= intLength-4; intCount++){
 					strCheck = strRow.substring(intCount, intCount + 4);
 					if (strCheck.equals("1111")){
 						return "1";
@@ -109,9 +109,10 @@ class calculations{
 			for(int intRow = 0; intRow <6; intRow++){
 				strRow = strRow + intBoard[intColumn][intRow];
 				intLength = strRow.length();
-				
-				for(int intCount = 0; intCount < intLength-4; intCount++){
+				//System.out.println(strRow);
+				for(int intCount = 0; intCount <= intLength-4; intCount++){
 					strCheck = strRow.substring(intCount, intCount+ 4);
+				//	System.out.println(strCheck);
 					if (strCheck.equals("1111")){
 						return "1";
 					}else if(strCheck.equals("2222")){
