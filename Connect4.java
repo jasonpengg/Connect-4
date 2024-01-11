@@ -9,7 +9,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	calculations calcs = new calculations();
 	JFrame theFrame = new JFrame("graphics!!!");
 	ConnectPanel thePanel = new ConnectPanel();
-	JPanel themePanel = new JPanel();
+	themesPanel themePanel = new themesPanel();
 	
 	JTextArea chatArea = new JTextArea();
 	JScrollPane theScroll = new JScrollPane(chatArea);
@@ -25,7 +25,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	Timer theTimer = new Timer(1000/30, this);
 	SuperSocketMaster ssm = null;
 
-	
+	String[] strTheme = new String[5];
 	
 	int intReleasedX = 0;
 	int intReleasedY = 0;
@@ -140,12 +140,20 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		themePanel.setPreferredSize(new Dimension(1280, 720));
 		themePanel.setBackground(Color.WHITE);
 		
-		theme1.setSize(300,200);
+		theme1.setSize(300,100);
 		theme1.setLocation(490, 100);
 		theme1.addActionListener(this);
 		themePanel.add(theme1);
 		
+		theme2.setSize(300,100);
+		theme2.setLocation(60, 100);
+		theme2.addActionListener(this);
+		themePanel.add(theme2);
 		
+		theme3.setSize(300,100);
+		theme3.setLocation(930, 100);
+		theme3.addActionListener(this);
+		themePanel.add(theme3);
 		
 		//----------------------------------------------- GENERAL FRAME ----------------------------------------------//
 		

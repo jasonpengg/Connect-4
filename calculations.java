@@ -15,6 +15,36 @@ class calculations{
 			}
 		}
 	}
+	//FileIO reading from textfile to put theme into an array
+	public String[] getTheme(String strTheme){
+		InputStreamReader irs = new InputStreamReader(System.in); 
+		BufferedReader kb = new BufferedReader(irs);
+		String[] themeArray = new String[5];
+		try{
+			FileReader fr = new FileReader ("Themes.txt");
+			BufferedReader themeReader = new BufferedReader(fr);
+			String strInput ="";
+			
+			while (!strInput.equals(strTheme)){
+				strInput = themeReader.readLine();
+			}
+			for (int intCount =0; intCount < 5; intCount++){
+				themeArray[intCount] = strInput;
+				strInput = themeReader.readLine();
+				//StrInput will contain an extraline or null if its at the end 
+			}
+				themeReader.close();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		return themeArray;
+	}
+	public void printThemeArray(String[] themeArray){
+		for (int intCount = 0; intCount < 5; intCount++){
+			System.out.println(themeArray[intCount]);
+		}
+	}
+	//---------------------
 	public void printBoard(){
 		for(int intCount = 0; intCount <6; intCount++){
 			for(int intCount2 = 0; intCount2 <7; intCount2++){
@@ -154,6 +184,8 @@ class calculations{
 		}
 		return "0"; // No diagonal win found
 	}
+	
+	
 	//Contructor
 	public calculations(){
 	}
