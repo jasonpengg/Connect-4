@@ -44,7 +44,9 @@ class calculations{
 			System.out.println(themeArray[intCount]);
 		}
 	}
-	//---------------------
+	
+	
+	//---------------------printing board----------------------------------//
 	public void printBoard(){
 		for(int intCount = 0; intCount <6; intCount++){
 			for(int intCount2 = 0; intCount2 <7; intCount2++){

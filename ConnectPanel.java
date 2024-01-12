@@ -23,27 +23,36 @@ public class ConnectPanel extends JPanel{
 	boolean blnRed = true;
 	boolean blnYellow = true;
 	boolean blnPlaced = false;
-	BufferedImage imgRed = null;
-	BufferedImage imgYellow = null;
+	
+	//Themes
+	BufferedImage imgPlayer1 = null;
+	BufferedImage imgPlayer2 = null;
+	BufferedImage imgBackground = null;
+	BufferedImage imgBoard = null;
 	BufferedImage imgArrow = null;
+	
 	int intTurn = 0;
 	int intBoard[][];
+	
+	String[] strTheme = {"","","","",""};
+	
 	
 	// Methods
 	// override how JComponent is painted 
 	// Set the Red and Yellow pieces to coordinates 
 	
+	//"Space Theme"
+	//"Standard Theme"
+	//"Christmas Theme"
 	
 	public void paintComponent(Graphics g){
-		g.setColor(Color.LIGHT_GRAY);
-		g.fillRect(0,0,1280,720);
-		g.setColor(Color.BLUE);
-		g.fillRect(500,100,770,610);
-		
-		g.setColor(Color.RED);
-		g.fillOval(intRedX,intRedY, 90, 90);
-		g.setColor(Color.YELLOW);
-		g.fillOval(intYellowX,intYellowY, 90, 90);
+		//Sets Background 
+		g.drawImage(imgBackground, 0, 0, null);
+		g.drawImage(imgBoard, 500, 100, null);
+	
+		g.drawImage(imgPlayer1,intRedX, intRedY, null);
+		 
+		g.drawImage(imgPlayer2, intYellowX, intYellowY, null);
 		
 		//prints Grid
 		g.setColor(Color.WHITE);
@@ -57,31 +66,31 @@ public class ConnectPanel extends JPanel{
 					g.setColor(Color.WHITE);
 					g.fillOval(intX,intY, 90, 90);
 				}else if(intBoard[intCount][intCount2] == 1){
-					g.setColor(Color.RED);
-					g.fillOval(intX,intY, 90, 90);
+					g.drawImage(imgPlayer1, intX, intY, null);
+					
 				}else if(intBoard[intCount][intCount2] == 2){
-					g.setColor(Color.YELLOW);
-					g.fillOval(intX,intY, 90, 90);
+					g.drawImage(imgPlayer2, intX, intY, null);
+					
 				}
 				
 			}
 			intY = 10;
 		}
 
-		//RED
+		//Player1
 		if(intPressedX >= (intRedX) && intPressedX <= (intRedX +90)&&intPressedY >= intRedY&& intPressedY <= (intRedY + 90) && blnPressed == true && blnRed == true){
 			//System.out.println("RED placed");
 			intDiffX = intPressedX - intRedX;
 			intDiffY = intPressedY - intRedY;
-			g.drawImage(imgRed, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
+			g.drawImage(imgPlayer1, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
 			blnPlaced = true;
 		}
-		//Yellow
+		//Player2
 		if(intPressedX >= (intYellowX) && intPressedX <= (intYellowX +90)&&intPressedY >= intYellowY&& intPressedY <= (intYellowY + 90) && blnPressed == true && blnYellow == true){
 			//System.out.println("Yellow placed");
 			intDiffX = intPressedX - intYellowX;
 			intDiffY = intPressedY - intYellowY;
-			g.drawImage(imgYellow, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
+			g.drawImage(imgPlayer2, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
 			blnPlaced = true;
 		}
 		//Determine turn order 
@@ -104,15 +113,27 @@ public class ConnectPanel extends JPanel{
 		g.fillRect(1160,0,1,800);
 		g.fillRect(1270,0,1,800);
 		}
-	//Constructor
-	public ConnectPanel (){
+		
+	public void loadTheme(String[] strTheme){
+		this.strTheme = strTheme;
+		System.out.println("loading new images");
 		try{
-			imgRed = ImageIO.read(new File("red.png"));
+			imgPlayer1 = ImageIO.read(new File(strTheme[1]));
 		}catch (IOException e){
 			System.out.println("cannot load image");
 		}
 		try{
-			imgYellow = ImageIO.read(new File("yellow.png"));
+			imgPlayer2 = ImageIO.read(new File(strTheme[2]));
+		}catch (IOException e){
+			System.out.println("cannot load image");
+		}
+		try{
+			imgBoard= ImageIO.read(new File(strTheme[3]));
+		}catch (IOException e){
+			System.out.println("cannot load image");
+		}
+		try{
+			imgBackground = ImageIO.read(new File(strTheme[4]));
 		}catch (IOException e){
 			System.out.println("cannot load image");
 		}
@@ -121,6 +142,12 @@ public class ConnectPanel extends JPanel{
 		}catch (IOException e){
 			System.out.println("cannot load image");
 		}
+	}
+	//Constructor
+	public ConnectPanel (String[] strTheme){
+		this.strTheme = strTheme;
+		System.out.println("loading new images");
+		loadTheme(strTheme);
 	}
 }
 /* IDEAS FOR HOW THE GRID IS ORGANIZED

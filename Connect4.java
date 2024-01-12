@@ -7,8 +7,8 @@ import java.io.*;
 public class Connect4 implements ActionListener, MouseListener, MouseMotionListener{
 	//Properties 
 	calculations calcs = new calculations();
-	JFrame theFrame = new JFrame("graphics!!!");
-	ConnectPanel thePanel = new ConnectPanel();
+	JFrame theFrame = new JFrame("Connect 4");
+	ConnectPanel thePanel = new ConnectPanel(calcs.getTheme("Standard Theme"));
 	themesPanel themePanel = new themesPanel();
 	
 	JTextArea chatArea = new JTextArea();
@@ -19,8 +19,8 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	JButton mainMenu = new JButton("Home");
 	JButton themeMenu = new JButton("Theme");
 	JButton theme1 = new JButton("Original");
-	JButton theme2 = new JButton("Christmas");
-	JButton theme3 = new JButton("Space");
+	JButton theme2 = new JButton("Space");
+	JButton theme3 = new JButton("Christmas");
 
 	Timer theTimer = new Timer(1000/30, this);
 	SuperSocketMaster ssm = null;
@@ -104,13 +104,30 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			theFrame.pack();
 			theFrame.repaint();
 		}
+		//-----------------------Theme Menu-----------------------------//
 		if(evt.getSource() == themeMenu){
 			theFrame.setContentPane(themePanel);
 			theFrame.pack();
 			theFrame.repaint();
 		}
+		//Original ("Standard Theme")
+		if (evt.getSource() == theme1){
+			thePanel.strTheme = calcs.getTheme("Standard Theme");
+			thePanel.loadTheme(calcs.getTheme("Standard Theme"));
+		}
+		//Space ("Space Theme")
+		if (evt.getSource() == theme2){
+			thePanel.strTheme = calcs.getTheme("Space Theme");
+			thePanel.loadTheme(calcs.getTheme("Space Theme"));
+		}
+		//Christmas ("Christmas Theme")
+		if (evt.getSource() == theme3){
+			thePanel.strTheme = calcs.getTheme("Christmas Theme");
+			thePanel.loadTheme(calcs.getTheme("Christmas Theme"));
 		
+		}
 		
+		//--------------ETC-------------------//
 		if(evt.getSource() == theTimer){
 			thePanel.repaint();
 		}
@@ -122,6 +139,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	public Connect4(){
 		//Initiallizing the Game Setup 
 		thePanel.intBoard = calcs.getBoard();
+		thePanel.strTheme = calcs.getTheme("Standard Theme");
 		thePanel.setPreferredSize(new Dimension(1280, 720));
 		thePanel.setLayout(null);
 		theFrame.setContentPane(thePanel);

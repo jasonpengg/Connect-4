@@ -1,9 +1,9 @@
-Standard Theme 
+Standard Theme
 red.png
 yellow.png
 defaultBoard.png
 defaultBackground.png
-Space Theme 
+Space Theme
 green.png
 blue.png
 spaceBoard.png
