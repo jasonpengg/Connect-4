@@ -10,9 +10,24 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	JFrame theFrame = new JFrame("Connect 4");
 	ConnectPanel thePanel = new ConnectPanel(calcs.getTheme("Standard Theme"));
 	themesPanel themePanel = new themesPanel();
+	JPanel SSMPanel = new JPanel();
+	
+	
 	
 	JTextArea chatArea = new JTextArea();
 	JScrollPane theScroll = new JScrollPane(chatArea);
+	JButton sendButton = new JButton("send");
+	JButton hostButton = new JButton("Host");
+	JButton joinButton = new JButton("Join");
+	JLabel nameLabel = new JLabel ("Enter Name: ");
+	JLabel ipLabel = new JLabel ("Enter IP Adress:");
+	JLabel portLabel = new JLabel ("Enter Port Number:");
+	JTextField sendField = new JTextField();
+	 
+	JTextField ipField = new JTextField();
+	JTextField portField = new JTextField();
+	JTextField userField = new JTextField(); 
+	
 
 	JMenuBar theBar = new JMenuBar();
 	
@@ -21,11 +36,17 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	JButton theme1 = new JButton("Original");
 	JButton theme2 = new JButton("Space");
 	JButton theme3 = new JButton("Christmas");
+	
+	
 
 	Timer theTimer = new Timer(1000/30, this);
-	SuperSocketMaster ssm = null;
+	
 
 	String[] strTheme = new String[5];
+	
+	
+	//SSM 
+	SuperSocketMaster ssm = null;
 	
 	int intReleasedX = 0;
 	int intReleasedY = 0;
@@ -126,29 +147,86 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			thePanel.loadTheme(calcs.getTheme("Christmas Theme"));
 		
 		}
+		//------------------------SSM --------------------------------//
+		if(evt.getSource() == sendButton){
+			System.out.println("send: "+sendField.getText());
+			ssm.sendText(sendField.getText());
+			chatArea.append(sendField.getText() +"\n");
+		}
 		
 		//--------------ETC-------------------//
+		
 		if(evt.getSource() == theTimer){
 			thePanel.repaint();
 		}
 		
 		
 	}
+	public void initializePanel(){
+		theFrame.setContentPane(SSMPanel);
+		theFrame.pack();
+		theFrame.repaint();
+		theBar.setVisible(false);
+	}
 	// Constructor
 	//add timer to the panel to repaint 
 	public Connect4(){
 		//Initiallizing the Game Setup 
-		thePanel.intBoard = calcs.getBoard();
-		thePanel.strTheme = calcs.getTheme("Standard Theme");
-		thePanel.setPreferredSize(new Dimension(1280, 720));
-		thePanel.setLayout(null);
+		//---------------------------SSM PANEL ---------------------------------//
+		
+		
+		SSMPanel.setPreferredSize(new Dimension(1280, 720));
+		SSMPanel.setLayout(null);
+		
+		ipField.setSize(400, 50);
+		ipField.setLocation(500,150);
+		SSMPanel.add(ipField);
+		ipField.addActionListener(this);
+		
+		ipLabel.setSize(200, 50);
+		ipLabel.setLocation(300,150);
+		SSMPanel.add(ipLabel);
+		
+		portField.setSize(400, 50);
+		portField.setLocation(500,250);
+		SSMPanel.add(portField);
+		portLabel.setSize(200, 50);
+		portLabel.setLocation(300,250);
+		SSMPanel.add(portLabel);
+		
+		userField.setSize(400, 50);
+		userField.setLocation(500,350);
+		SSMPanel.add(userField);
+		nameLabel.setSize(200, 50);
+		nameLabel.setLocation(300,350);
+		SSMPanel.add(nameLabel);
+		
+		
+		
+
 		theFrame.setContentPane(thePanel);
 		
 		//----------------------------------------- GAME PANEL -----------------------------------------------//
 		
-		theScroll.setSize(480,400);
+		thePanel.intBoard = calcs.getBoard();
+		thePanel.strTheme = calcs.getTheme("Standard Theme");
+		thePanel.setPreferredSize(new Dimension(1280, 720));
+		thePanel.setLayout(null);
+		theScroll.setSize(480,350);
 		theScroll.setLocation(10,310);
 		thePanel.add(theScroll);
+		
+		
+		sendField.setSize(400,30);
+		sendField.setLocation(10,680);
+		thePanel.add(sendField);
+		sendField.addActionListener(this);
+		
+		sendButton.setSize(80, 30);
+		sendButton.setLocation(410, 680);
+		thePanel.add(sendButton);
+		sendButton.addActionListener(this);
+		
 
 
 		thePanel.addMouseListener(this);
@@ -184,12 +262,14 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		mainMenu.addActionListener(this);
 		themeMenu.addActionListener(this);
 		
+
 		thePanel.repaint();
 		theFrame.pack();
 		theFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		theFrame.setResizable(false);
 		theFrame.setVisible(true);
 		theTimer.start();
+		initializePanel();
 	}
 
 	// Main Method
