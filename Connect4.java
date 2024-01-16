@@ -19,8 +19,9 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	JButton sendButton = new JButton("send");
 	JButton hostButton = new JButton("Host");
 	JButton joinButton = new JButton("Join");
+	JButton getIPButton = new JButton("Get my IP");
 	JLabel nameLabel = new JLabel ("Enter Name: ");
-	JLabel ipLabel = new JLabel ("Enter IP Adress:");
+	JLabel ipLabel = new JLabel ("Enter IP Address:");
 	JLabel portLabel = new JLabel ("Enter Port Number:");
 	JTextField sendField = new JTextField();
 	 
@@ -43,10 +44,13 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	
 
 	String[] strTheme = new String[5];
+	String[] strSSMArray = new String[6];
 	
 	
 	//SSM 
 	SuperSocketMaster ssm = null;
+	
+	String strUsername ="";
 	
 	int intReleasedX = 0;
 	int intReleasedY = 0;
@@ -148,11 +152,36 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		
 		}
 		//------------------------SSM --------------------------------//
+		//Array Format: 1 = Name 2 = Message 3 = tile choice 4 = X-Cord 5 = Y-Cord 6 = turn
+		/*
+		if(evt.getSource() == getIPButton){
+			ipField.setText(ssm.getMyAddress());
+			
+		}
+		*/
 		if(evt.getSource() == sendButton){
 			System.out.println("send: "+sendField.getText());
 			ssm.sendText(sendField.getText());
-			chatArea.append(sendField.getText() +"\n");
+			chatArea.append(strSSMArray[0] +": "+sendField.getText() +"\n");
+			
 		}
+		if (evt.getSource() == hostButton){
+			System.out.println("Start socekt in server mode");
+			ssm = new SuperSocketMaster(Integer.parseInt(portField.getText()), this);
+			ssm.connect();
+			strUsername = userField.getText();
+			changeToHomePanel();
+			mainMenu.doClick();
+		}
+		if (evt.getSource() == joinButton){
+			System.out.println("Start socket in client mode");
+			ssm = new SuperSocketMaster(ipField.getText(), Integer.parseInt(portField.getText()),this);
+			ssm.connect();
+			strUsername = userField.getText();
+			changeToHomePanel();
+			mainMenu.doClick();
+		}
+		
 		
 		//--------------ETC-------------------//
 		
@@ -167,6 +196,12 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		theFrame.pack();
 		theFrame.repaint();
 		theBar.setVisible(false);
+	}
+	public void changeToHomePanel(){
+		theFrame.setContentPane(thePanel);
+		theFrame.pack();
+		theFrame.repaint();
+		theBar.setVisible(true);	
 	}
 	// Constructor
 	//add timer to the panel to repaint 
@@ -200,6 +235,24 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		nameLabel.setSize(200, 50);
 		nameLabel.setLocation(300,350);
 		SSMPanel.add(nameLabel);
+		
+		hostButton.setSize(300,50);
+		hostButton.setLocation(750, 450);
+		SSMPanel.add(hostButton);
+		hostButton.addActionListener(this);
+		
+		joinButton.setSize(300,50);
+		joinButton.setLocation(350,450);
+		SSMPanel.add(joinButton);
+		joinButton.addActionListener(this);
+		
+		/*
+		 REMOVE IF I CANNOT FIGURE IT OUT 
+		getIPButton.setSize(300,50);
+		getIPButton.setLocation(550,550);
+		SSMPanel.add(getIPButton);
+		getIPButton.addActionListener(this);
+		*/
 		
 		
 		
@@ -262,7 +315,6 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		mainMenu.addActionListener(this);
 		themeMenu.addActionListener(this);
 		
-
 		thePanel.repaint();
 		theFrame.pack();
 		theFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
