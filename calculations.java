@@ -4,9 +4,9 @@ class calculations{
 	// [Columns] [Rows] 
 	// [x][y]
 	private int intBoard[][] = new int[7][6];
-	private int intRow = 0;
+	public int intRow = 0;
 	private int intPiece = 1;
-	private String strPlayer = "RED";
+	private String strPlayer = "1";
 	
 	public void initializeboard(){
 		for(int intCount = 0; intCount <7; intCount++){
@@ -97,11 +97,11 @@ class calculations{
 		if(intCurrentPlayer % 2 == 0){
 			//Player 1 (RED)
 			intPiece = 1;
-			strPlayer = "RED";
+			strPlayer = "1";
 		}else if(intCurrentPlayer % 2 == 1){
 			//Player 2 (Yellow)
 			intPiece = 2;
-			strPlayer = "YELLOW";
+			strPlayer = "2";
 		}
 	}
 	//Checks array for 4 in a row Horizontal

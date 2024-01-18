@@ -24,12 +24,19 @@ public class ConnectPanel extends JPanel{
 	boolean blnYellow = true;
 	boolean blnPlaced = false;
 	
+	//SSM 
+	int intSSMX = 0;
+	int intSSMY = 0;
+	int intPlayer = 0;
+	boolean blnDraw = false;
+	
 	//Themes
 	BufferedImage imgPlayer1 = null;
 	BufferedImage imgPlayer2 = null;
 	BufferedImage imgBackground = null;
 	BufferedImage imgBoard = null;
 	BufferedImage imgArrow = null;
+	Graphics g = null;
 	
 	int intTurn = 0;
 	int intBoard[][];
@@ -95,10 +102,22 @@ public class ConnectPanel extends JPanel{
 		}
 		//Determine turn order 
 		//% 2 = Player 2
-		if(this.intTurn % 2 ==0){
+		if(this.intTurn % 2 == 0 && intPlayer == 1){
 			g.drawImage(imgArrow, 200 ,220, null);
-		}else if(this.intTurn % 2 ==1){
+		}else if(this.intTurn % 2 ==1 && intPlayer == 2){
 			g.drawImage(imgArrow, 200 ,120, null);
+		}
+		
+		//Drawing SSM
+		if(blnDraw == true){
+			if(intPlayer == 2){
+				g.drawImage(imgPlayer1, intSSMX, intSSMY, null);
+			}	
+			else if(intPlayer == 1){
+				g.drawImage(imgPlayer2, intSSMX, intSSMY, null);
+			}
+			//blnDraw = false;
+			
 		}
 		
 		
@@ -113,6 +132,15 @@ public class ConnectPanel extends JPanel{
 		g.fillRect(1160,0,1,800);
 		g.fillRect(1270,0,1,800);
 		}
+	public void drawPiece(String[] strArray){
+		
+		if(strArray[1].equals("Player 1")){
+			g.drawImage(imgPlayer1, Integer.parseInt(strArray[1]), Integer.parseInt(strArray[2]), null);
+		}
+		else if(strArray[1].equals("Player 2")){
+			g.drawImage(imgPlayer2, Integer.parseInt(strArray[1]), Integer.parseInt(strArray[2]), null);
+		}
+	}
 		
 	public void loadTheme(String[] strTheme){
 		this.strTheme = strTheme;

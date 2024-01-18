@@ -24,7 +24,8 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	JLabel ipLabel = new JLabel ("Enter IP Address:");
 	JLabel portLabel = new JLabel ("Enter Port Number:");
 	JTextField sendField = new JTextField();
-	 
+	
+	JLabel turnLabel = new JLabel ("Turn: 0");
 	JTextField ipField = new JTextField();
 	JTextField portField = new JTextField();
 	JTextField userField = new JTextField(); 
@@ -44,16 +45,25 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	
 
 	String[] strTheme = new String[5];
-	String[] strSSMArray = new String[6];
+	
 	
 	
 	//SSM 
+	String[] strSSMArray = new String[3];
 	SuperSocketMaster ssm = null;
 	
-	String strUsername ="";
 	
+	//SSM Personal 
+	String strUsername ="";
+	int intPlayer;
+	
+	//SSM SentOut
+	int intPlayerTurn = 0;
 	int intReleasedX = 0;
 	int intReleasedY = 0;
+	
+	String strSplit = ";-;";
+	boolean blnGame = false;
 	
 
 
@@ -68,9 +78,11 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		
 	}
 	public void mouseDragged(MouseEvent evt){
-		thePanel.intDraggedX = evt.getX();
-		thePanel.intDraggedY = evt.getY();
-
+		if(calcs.getPlayer().equals(""+intPlayer)&& thePanel.blnPlaced == true){
+			thePanel.intDraggedX = evt.getX();
+			thePanel.intDraggedY = evt.getY();
+			ssm.sendText("Location"+ strSplit+ (thePanel.intDraggedX - thePanel.intDiffX)+ strSplit + (thePanel.intDraggedY - thePanel.intDiffY));
+		}
 	}
 	public void mouseExited(MouseEvent evt){
 	
@@ -89,10 +101,13 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			//Checks to see if the piece placed is in bounds 
 			if(calcs.position(intReleasedX, intReleasedY) == true){
 				thePanel.intBoard = calcs.place();
+				ssm.sendText("Game"+strSplit+calcs.intRow+strSplit+"0");
 				System.out.println("winner is H " +calcs.HorizontalCheckWin());
 				System.out.println("winner is V " +calcs.VerticalCheckWin());
 				System.out.println("winner is D " +calcs.DiagonalCheckWin());
+				
 			}
+			turnLabel.setText(""+calcs.getPlayerTurn());
 			thePanel.intTurn = calcs.getPlayerTurn();
 			System.out.println(calcs.getPlayerTurn());
 			
@@ -103,22 +118,26 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		//BUG fix???
 		thePanel.intDraggedX = -100;
 		thePanel.intDraggedY = -100;
+		
 	}
 	public void mousePressed(MouseEvent evt){
 		thePanel.intPressedX = evt.getX();
 		thePanel.intPressedY = evt.getY();
 		System.out.println(calcs.getPlayer());
-		if(calcs.getPlayer().equals("RED")){
-			System.out.println("RED");
-			thePanel.blnRed = true;
-			thePanel.blnYellow = false;
-		}else if(calcs.getPlayer().equals("YELLOW")){
-			System.out.println("YELLOW");
-			thePanel.blnYellow = true;
-			thePanel.blnRed = false;
+		if(calcs.getPlayer().equals(""+intPlayer)){
+			if(calcs.getPlayer().equals("1")&&intPlayer == 1){
+				System.out.println("RED");
+				thePanel.blnRed = true;
+				thePanel.blnYellow = false;
+			}else if(calcs.getPlayer().equals("2") && intPlayer ==2){
+				System.out.println("YELLOW");
+				thePanel.blnYellow = true;
+				thePanel.blnRed = false;
+			}
+			thePanel.blnPressed = true;
+			System.out.println("Pressed = " +thePanel.intPressedX +" "+ thePanel.intPressedY);
 		}
-		thePanel.blnPressed = true;
-		System.out.println("Pressed = " +thePanel.intPressedX +" "+ thePanel.intPressedY);
+		
 	}
 	public void mouseClicked(MouseEvent evt){
 		
@@ -153,33 +172,79 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		}
 		//------------------------SSM --------------------------------//
 		//Array Format: 1 = Name 2 = Message 3 = tile choice 4 = X-Cord 5 = Y-Cord 6 = turn
+		
+		//Send Types: 
+		
+		//1. Message + Username 
+		//eg: Message, Jason, Hey, 
+		
+		//2. Real time location of the block
+		//eg Location, 10, 20, 
+		 
+		//3. Gameplay data: where they placed the piece 
+		//eg. Game, column placed, [0]
+		
+		
 		/*
 		if(evt.getSource() == getIPButton){
 			ipField.setText(ssm.getMyAddress());
 			
 		}
 		*/
+		
+		
 		if(evt.getSource() == sendButton){
 			System.out.println("send: "+sendField.getText());
-			ssm.sendText(sendField.getText());
-			chatArea.append(strSSMArray[0] +": "+sendField.getText() +"\n");
-			
+			chatArea.append(strUsername +": "+sendField.getText() +"\n");
+			ssm.sendText("Message"+strSplit+strUsername+strSplit+sendField.getText());
+			sendField.setText("");
+			//[message][Username][MMessage]
 		}
 		if (evt.getSource() == hostButton){
-			System.out.println("Start socekt in server mode");
+			System.out.println("Start socket in server mode");
 			ssm = new SuperSocketMaster(Integer.parseInt(portField.getText()), this);
 			ssm.connect();
 			strUsername = userField.getText();
 			changeToHomePanel();
-			mainMenu.doClick();
+			blnGame = true;
+			this.intPlayer = 1;
+			thePanel.intPlayer = this.intPlayer;
+			strUsername = userField.getText();
 		}
+		
 		if (evt.getSource() == joinButton){
 			System.out.println("Start socket in client mode");
 			ssm = new SuperSocketMaster(ipField.getText(), Integer.parseInt(portField.getText()),this);
 			ssm.connect();
 			strUsername = userField.getText();
 			changeToHomePanel();
-			mainMenu.doClick();
+			blnGame = true;
+			this.intPlayer = 2;
+			thePanel.intPlayer = this.intPlayer;
+			strUsername = userField.getText();
+			ssm.sendText("Message"+strSplit+strUsername+strSplit+"has joined the lobby");
+			chatArea.append(strUsername +": "+sendField.getText() +"\n");
+			
+		}
+		if(evt.getSource() == ssm){
+			String[] strSSMArray = ssm.readText().split(strSplit);
+			if(strSSMArray[0].equals("Message")){
+				chatArea.append(strSSMArray[1]+": "+strSSMArray[2]+"\n");
+				
+				
+			}else if(strSSMArray[0].equals("Location")){
+				//thePanel.drawPiece(strSSMArray);
+				thePanel.intSSMX = Integer.parseInt(strSSMArray[1]); 
+				thePanel.intSSMY = Integer.parseInt(strSSMArray[2]); 
+				thePanel.blnDraw = true;
+				//BLN draw needs to be true when ARRAY [0] = game
+				
+			}else if(strSSMArray[0].equals("Game")){
+				calcs.intRow = Integer.parseInt(strSSMArray[1]);
+				thePanel.intBoard = calcs.place();
+				thePanel.intTurn = calcs.getPlayerTurn();
+				turnLabel.setText(""+calcs.getPlayerTurn());
+			}
 		}
 		
 		
@@ -187,6 +252,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		
 		if(evt.getSource() == theTimer){
 			thePanel.repaint();
+			//[Game][x][y]
 		}
 		
 		
@@ -198,10 +264,15 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		theBar.setVisible(false);
 	}
 	public void changeToHomePanel(){
+		theBar.setVisible(true);
 		theFrame.setContentPane(thePanel);
 		theFrame.pack();
 		theFrame.repaint();
-		theBar.setVisible(true);	
+			
+	}
+	public void checkTurn(){
+		
+		
 	}
 	// Constructor
 	//add timer to the panel to repaint 
@@ -279,6 +350,10 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		sendButton.setLocation(410, 680);
 		thePanel.add(sendButton);
 		sendButton.addActionListener(this);
+		
+		turnLabel.setSize(100, 30);
+		turnLabel. setLocation(0,0);
+		thePanel.add(turnLabel);
 		
 
 
