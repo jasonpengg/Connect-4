@@ -129,6 +129,19 @@ class calculations{
 		
 		return "0";
 	}
+	public boolean CheckTie(){
+		String strCheck = "";
+		for(int intRow = 0; intRow <6; intRow++){
+			strCheck ="";
+			for(int intColumn = 0; intColumn <7; intColumn++){
+				if(intBoard[intColumn][intRow] == 0){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
 	//Checks array for 4 in a row Vertical
 	public String VerticalCheckWin(){
 		// intCount2 = horizontal array 
@@ -186,7 +199,24 @@ class calculations{
 		}
 		return "0"; // No diagonal win found
 	}
-	
+	public String checkResult(){
+		if(DiagonalCheckWin().equals("1")){
+			return "Player 1";
+		}else if(DiagonalCheckWin().equals("2")){
+			return "Player 2";
+		}else if(HorizontalCheckWin().equals("1")){
+			return "Player 1";
+		}else if(HorizontalCheckWin().equals("2")){
+			return "Player 2";
+		}else if(VerticalCheckWin().equals("1")){
+			return "Player 1";
+		}else if(VerticalCheckWin().equals("2")){
+			return "Player 2";
+		}else if(CheckTie() == true){
+			return "tie";
+		}
+		return "0";
+	}
 	
 	//Contructor
 	public calculations(){
