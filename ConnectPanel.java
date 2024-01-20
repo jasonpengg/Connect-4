@@ -8,16 +8,16 @@ import javax.imageio.*;
 public class ConnectPanel extends JPanel{
 	// Properties 
 	boolean blnPrintGrid = true;
-	int intPressedX = 0;
-	int intPressedY = 0; 
-	int intDraggedX = 0;
-	int intDraggedY = 0;
+	int intPressedX = -0;
+	int intPressedY = -0; 
+	int intDraggedX = -1000;
+	int intDraggedY = -1000;
 	int intRedX = 390; 
 	int intRedY = 210;
 	int intYellowX = 390;
 	int intYellowY = 110;
-	int intDiffX = 0;
-	int intDiffY = 0;
+	int intDiffX = -5000;
+	int intDiffY = -5000;
 	boolean blnDiff = true;
 	boolean blnPressed = false;
 	boolean blnRed = true;
@@ -36,7 +36,7 @@ public class ConnectPanel extends JPanel{
 	BufferedImage imgBackground = null;
 	BufferedImage imgBoard = null;
 	BufferedImage imgArrow = null;
-	Graphics g = null;
+	BufferedImage imgHighlight = null;
 	
 	int intTurn = 0;
 	int intBoard[][];
@@ -90,6 +90,7 @@ public class ConnectPanel extends JPanel{
 			intDiffX = intPressedX - intRedX;
 			intDiffY = intPressedY - intRedY;
 			g.drawImage(imgPlayer1, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
+			//System.out.println(intDraggedX +","+ intDiffX +","+ intDraggedY +","+ intDiffY);
 			blnPlaced = true;
 		}
 		//Player2
@@ -98,7 +99,18 @@ public class ConnectPanel extends JPanel{
 			intDiffX = intPressedX - intYellowX;
 			intDiffY = intPressedY - intYellowY;
 			g.drawImage(imgPlayer2, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
+			//System.out.println(intDraggedX +","+ intDiffX +","+ intDraggedY +","+ intDiffY);
 			blnPlaced = true;
+		}
+
+			int intXMin = 390; 
+			int intXMax = 500; 
+		for(int intCount = 0; intCount < 7; intCount++){
+			intXMin = intXMin + 110;
+			intXMax = intXMax + 110;
+			if(intDraggedX >= intXMin && intDraggedX <= intXMax && intDraggedY < 100){
+				g.drawImage(imgHighlight, intXMin, 0, null);
+			}
 		}
 		//Determine turn order 
 		//% 2 = Player 2
@@ -132,15 +144,6 @@ public class ConnectPanel extends JPanel{
 		g.fillRect(1160,0,1,800);
 		g.fillRect(1270,0,1,800);
 		}
-	public void drawPiece(String[] strArray){
-		
-		if(strArray[1].equals("Player 1")){
-			g.drawImage(imgPlayer1, Integer.parseInt(strArray[1]), Integer.parseInt(strArray[2]), null);
-		}
-		else if(strArray[1].equals("Player 2")){
-			g.drawImage(imgPlayer2, Integer.parseInt(strArray[1]), Integer.parseInt(strArray[2]), null);
-		}
-	}
 		
 	public void loadTheme(String[] strTheme){
 		this.strTheme = strTheme;
@@ -167,6 +170,11 @@ public class ConnectPanel extends JPanel{
 		}
 		try{
 			imgArrow = ImageIO.read(new File("arrow.png"));
+		}catch (IOException e){
+			System.out.println("cannot load image");
+		}
+		try{
+			imgHighlight = ImageIO.read(new File("highlight.png"));
 		}catch (IOException e){
 			System.out.println("cannot load image");
 		}

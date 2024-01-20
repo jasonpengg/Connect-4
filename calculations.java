@@ -1,6 +1,6 @@
 import java.io.*;
 class calculations{
-	private int intCurrentPlayer = 0;
+	private int intCurrentPlayerTurn = 0;
 	// [Columns] [Rows] 
 	// [x][y]
 	private int intBoard[][] = new int[7][6];
@@ -81,11 +81,26 @@ class calculations{
 
 		return intBoard;
 	}
+	//Resets game 
 	
+	public void resetGame(){
+		initializeboard();
+		intCurrentPlayerTurn = 0;
+		getPlayer();
+	}
 	public int getPlayerTurn(){
-		return intCurrentPlayer;
+		return intCurrentPlayerTurn;
 	}
 	public String getPlayer(){
+		if(intCurrentPlayerTurn % 2 == 0){
+			//Player 1 (RED)
+			intPiece = 1;
+			strPlayer = "1";
+		}else if(intCurrentPlayerTurn % 2 == 1){
+			//Player 2 (Yellow)
+			intPiece = 2;
+			strPlayer = "2";
+		}
 		return strPlayer;
 	}
 	public int[][] getBoard(){
@@ -93,12 +108,12 @@ class calculations{
 	}
 	
 	private void switchPlayer(){
-		intCurrentPlayer++;
-		if(intCurrentPlayer % 2 == 0){
+		intCurrentPlayerTurn++;
+		if(intCurrentPlayerTurn % 2 == 0){
 			//Player 1 (RED)
 			intPiece = 1;
 			strPlayer = "1";
-		}else if(intCurrentPlayer % 2 == 1){
+		}else if(intCurrentPlayerTurn % 2 == 1){
 			//Player 2 (Yellow)
 			intPiece = 2;
 			strPlayer = "2";
