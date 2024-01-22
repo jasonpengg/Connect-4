@@ -5,7 +5,8 @@ import javax.swing.event.*;
 import java.io.*;
 
 public class Connect4 implements ActionListener, MouseListener, MouseMotionListener{
-	//Properties 
+	
+	//Properties of panels and frames
 	calculations calcs = new calculations();
 	JFrame theFrame = new JFrame("Connect 4");
 	ConnectPanel thePanel = new ConnectPanel(calcs.getTheme("Standard Theme"));
@@ -14,9 +15,9 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	JPanel helpSSMPanel = new JPanel();
 	JPanel helpGamePanel = new JPanel();
 	JPanel winPanel = new JPanel();
-	
-	JTextArea chatArea = new JTextArea();
-	JScrollPane theScroll = new JScrollPane(chatArea);
+
+
+	//Properties for SSM Panel
 	JButton sendButton = new JButton("send");
 	JButton hostButton = new JButton("Host");
 	JButton joinButton = new JButton("Join");
@@ -28,18 +29,21 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	JLabel portLabel = new JLabel ("Enter Port Number:");
 	JLabel invalidLabel3 = new JLabel ("invalid: Cannot be empty");
 	JTextField sendField = new JTextField();
-	
 	JLabel turnLabel = new JLabel ("Turn Count: 0");
 	JTextField ipField = new JTextField();
 	JTextField portField = new JTextField();
 	JTextField userField = new JTextField(); 
 	
+	//Properties for game panel 
+	JTextArea chatArea = new JTextArea();
+	JScrollPane theScroll = new JScrollPane(chatArea);
 	JLabel winLabel = new JLabel("winner");
 	JLabel P1Score = new JLabel ("Player 1: 0W");
 	JLabel P2Score = new JLabel ("Player 2: 0W");
 
 	JMenuBar theBar = new JMenuBar();
 	
+	//Properties for themes panel 
 	JButton mainMenu = new JButton("Home");
 	JButton themeMenu = new JButton("Theme");
 	JButton helpMenu = new JButton("Help");
@@ -50,13 +54,14 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	JButton theme2 = new JButton("Space");
 	JButton theme3 = new JButton("Christmas");
 	
+	//Properties for play again screen 
 	JButton playAgain = new JButton("Play Again");
 	
 	
-
+	//Timer for frame refresh rate
 	Timer theTimer = new Timer(1000/60, this);
 	
-
+	//Theme array
 	String[] strTheme = new String[5];
 	
 	
@@ -70,7 +75,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	String strUsername ="";
 	String strOpponent = "";
 	
-	
+	//SSM values
 	String strPlayer1 ="";
 	String strPlayer2 ="";
 	int intPlayer2Score = 0;
@@ -83,7 +88,9 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	int intReleasedX = 0;
 	int intReleasedY = 0;
 	
+	//Setting up the split value (value used to split SSM messages into array)
 	String strSplit = ";-;";
+	//setting the boolean game value to 
 	boolean blnGame = false;
 	
 
@@ -348,8 +355,8 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			strPlayer2 = strUsername; 
 			strPlayer1 = strOpponent;
 		}
-		P1Score.setText(strPlayer1 + ": " +intPlayer1Score);
-		P2Score.setText(strPlayer2 + ": " +intPlayer2Score);
+		P1Score.setText(strPlayer1 + ": " +intPlayer1Score+"W");
+		P2Score.setText(strPlayer2 + ": " +intPlayer2Score+"W");
 	}
 	public void results(){
 		if(calcs.checkResult().equals("Player 1")){
