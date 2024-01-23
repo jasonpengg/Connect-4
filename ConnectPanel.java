@@ -6,43 +6,114 @@ import javax.imageio.*;
 
 
 public class ConnectPanel extends JPanel{
-	/**properties 
-	 * @return hi
+	/** Checks to see if grid needs to be printed 
+	 * @return Set as true 
 	 */
 	boolean blnPrintGrid = true;
+	/**Describes the x-coordinate of the mouse when user presses their mouse
+	 * @return Value is inputted by the MouseListner
+	 */
 	int intPressedX = -0;
+	/**Describes the y-coordinate of the mouse when user presses their mouse
+	 * @return Value is inputted by the MouseListner
+	 */
 	int intPressedY = -0; 
+	/**Describes the x-coordinate of the mouse when user presses their mouse and drags it 
+	 * @return Value is initalized at -1000 but is set as different values inputted by MouseMotionListener
+	 */
 	int intDraggedX = -1000;
+	/**Describes the y-coordinate of the mouse when user presses their mouse and drags it 
+	 * @return Value is initalized at -1000 but is set as different values inputted by MouseMotionListener
+	 */
 	int intDraggedY = -1000;
+	/**Describes the x-coordinate of red game piece origin
+	 * @return value is constant throughout gameplay but can be manually changed in code to change starting place of piece
+	 */
 	int intRedX = 390; 
+	/**Describes the y-coordinate of red game piece origin
+	 * @return value is constant throughout gameplay but can be manually changed in code to change starting place of piece
+	 */
 	int intRedY = 210;
+	/**Describes the x-coordinate of yellow game piece origin
+	 * @return value is constant throughout gameplay but can be manually changed in code to change starting place of piece
+	 */
 	int intYellowX = 390;
+	/**Describes the y-coordinate of yellow game piece origin
+	 * @return value is constant throughout gameplay but can be manually changed in code to change starting place of piece
+	 */
 	int intYellowY = 110;
+	/**Describes the x-coordinate difference from the mouse and where the image is drawn
+	 * @return value is used to draw piece when player is moving it 
+	 */
 	int intDiffX = -5000;
+	/**Describes the y-coordinate difference from the mouse and where the image is drawn
+	 * @return value is used to draw piece when player is moving it 
+	 */
 	int intDiffY = -5000;
-	boolean blnDiff = true;
+	/**Describes if the player pressed on their piece
+	 * @return value is used in animation of drawing clicked piece
+	 */
 	boolean blnPressed = false;
+	/**Describes if the red player is allowed to move their piece
+	 * @return Value is based on turn calculations
+	 */
 	boolean blnRed = true;
+	/**Describes if the yellow player is allowed to move their piece
+	 * @return Value is based on turn calculations
+	 */
 	boolean blnYellow = true;
+	/**Describes if piece was placed successfully on the board
+	 * @return Value is based on mouse drag
+	 */
 	boolean blnPlaced = false;
 	
 	//SSM variables
+	/**Describes the x-coordinate of the opponents piece when being dragged around
+	 * @return value is used to draw piece when player is moving it 
+	 */
 	int intSSMX = 0;
+	/**Describes the x-coordinate of the opponents piece when being dragged around
+	 * @return value is used to draw piece when player is moving it 
+	 */
 	int intSSMY = 0;
+	/**Describes what player's turn it is
+	 * @return value is used to differientiate gameplay calculations
+	 */
 	int intPlayer = 0;
+	/**Describes if panel needs to be drawn
+	 */
 	boolean blnDraw = false;
 	
 	//Theme variables 
+	/**Holds the image of player ones piece
+	 */
 	BufferedImage imgPlayer1 = null;
+	/**Holds the image of player twos piece
+	 */
 	BufferedImage imgPlayer2 = null;
+	/**Holds the image of background
+	 */
 	BufferedImage imgBackground = null;
+	/**Holds the image of the board
+	 */
 	BufferedImage imgBoard = null;
+	/**Holds the image of arrow
+	 */
 	BufferedImage imgArrow = null;
+	/**Holds the image of highlight
+	 */
 	BufferedImage imgHighlight = null;
+	/**Array to hold theme components
+	 */
 	String[] strTheme = {"","","","",""};
 	
 	//Game variables
+	
+	/**Variable decides the turn count
+	 */
 	int intTurn = 0;
+	/**Board array; updated as the game goes on
+	 */
 	int intBoard[][];
 	
 	
@@ -54,6 +125,9 @@ public class ConnectPanel extends JPanel{
 	//"Standard Theme"
 	//"Christmas Theme"
 	
+	/**Method paints the display of the board, "holes" in the board and all components on the gameplay panel
+	 * @return No return value; just draws
+	 */
 	public void paintComponent(Graphics g){
 		//Sets Background 
 		g.drawImage(imgBackground, 0, 0, null);
@@ -152,7 +226,10 @@ public class ConnectPanel extends JPanel{
 		g.fillRect(1270,0,1,800);
 		}
 		
-	//Method to load in all images based on theme array loaded in on calculations.java
+	
+	/**Loads in all images based on theme array loaded in on calculations.java
+	 * @return No return values; just draws display
+	 */
 	public void loadTheme(String[] strTheme){
 		this.strTheme = strTheme;
 		System.out.println("loading new images");
@@ -194,6 +271,9 @@ public class ConnectPanel extends JPanel{
 		}
 	}
 	//Constructor
+	/**Constructs the pannel 
+	 * @param strTheme - theme array which holds the name of all files needed to draw images on the panel
+	 */
 	public ConnectPanel (String[] strTheme){
 		this.strTheme = strTheme;
 		System.out.println("loading new images");
