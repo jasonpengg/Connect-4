@@ -17,7 +17,7 @@ public class themesPanel extends JPanel{
 	//Constructor
 	public themesPanel (){
 		try{
-			imgBackground = ImageIO.read(new File("themes.png"));
+			imgBackground = ImageIO.read(new File("resources/themes.png"));
 		}catch (IOException e){
 			System.out.println("cannot load image");
 		}

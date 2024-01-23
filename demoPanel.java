@@ -5,11 +5,10 @@ import java.io.*;
 import javax.imageio.*;
 
 
-public class ConnectPanel extends JPanel{
+public class demoPanel extends JPanel{
 	/**properties 
 	 * @return hi
 	 */
-	boolean blnPrintGrid = true;
 	int intPressedX = -0;
 	int intPressedY = -0; 
 	int intDraggedX = -1000;
@@ -26,6 +25,9 @@ public class ConnectPanel extends JPanel{
 	boolean blnYellow = true;
 	boolean blnPlaced = false;
 	
+	int intArrowX = 150;
+	int intDefArrowX = 0;
+	
 	//SSM variables
 	int intSSMX = 0;
 	int intSSMY = 0;
@@ -39,11 +41,20 @@ public class ConnectPanel extends JPanel{
 	BufferedImage imgBoard = null;
 	BufferedImage imgArrow = null;
 	BufferedImage imgHighlight = null;
+	BufferedImage img1 = null;
+	BufferedImage img2 = null;
+	BufferedImage img3 = null;
+	BufferedImage img4 = null;
 	String[] strTheme = {"","","","",""};
 	
 	//Game variables
 	int intTurn = 0;
 	int intBoard[][];
+	int intSeconds = 0;
+	
+	double dblTime = 0;
+	
+	boolean blnWin = false;
 	
 	
 	// Methods
@@ -85,28 +96,15 @@ public class ConnectPanel extends JPanel{
 			}
 			intY = 10;
 		}
-
+		if(blnWin == true){
+			g.drawImage(imgPlayer1, 840, 110, null);
+		}
 		//Player1
 		//If mouse is pressed within specific coordinates draw the checker where the player dragged the mouse
-		if(intPressedX >= (intRedX) && intPressedX <= (intRedX +90)&&intPressedY >= intRedY&& intPressedY <= (intRedY + 90) && blnPressed == true && blnRed == true){
-			//System.out.println("RED placed");
-			//To constantly draw the checker as if the mouse is "holding" it, we must calcualte the distance the mouse is from the top right of the image to accurately draw the image
+		if(intPressedX >= (intRedX) && intPressedX <= (intRedX +90)&&intPressedY >= intRedY&& intPressedY <= (intRedY + 90) && blnPressed == true){
 			intDiffX = intPressedX - intRedX;
 			intDiffY = intPressedY - intRedY;
-			//Drawing checker
 			g.drawImage(imgPlayer1, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
-			//System.out.println(intDraggedX +","+ intDiffX +","+ intDraggedY +","+ intDiffY);
-			blnPlaced = true;
-		}
-		//Player2
-		//If mouse is pressed within specific coordinates draw the checker where the player dragged the mouse
-		if(intPressedX >= (intYellowX) && intPressedX <= (intYellowX +90)&&intPressedY >= intYellowY&& intPressedY <= (intYellowY + 90) && blnPressed == true && blnYellow == true){
-			//System.out.println("Yellow placed");
-			//To constantly draw the checker as if the mouse is "holding" it, we must calcualte the distance the mouse is from the top right of the image to accurately draw the image
-			intDiffX = intPressedX - intYellowX;
-			intDiffY = intPressedY - intYellowY;
-			g.drawImage(imgPlayer2, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
-			//System.out.println(intDraggedX +","+ intDiffX +","+ intDraggedY +","+ intDiffY);
 			blnPlaced = true;
 		}
 
@@ -122,23 +120,29 @@ public class ConnectPanel extends JPanel{
 				g.drawImage(imgHighlight, intXMin, 0, null);
 			}
 		}
-		//Determine turn order by using if the turn value is an even number (intTurn%2 = 0) and intPlayer == 1, then it is player 1's turn and therefore draw arrow next to their checker to indicate turn
-		if(this.intTurn % 2 == 0 && intPlayer == 1){
-			g.drawImage(imgArrow, 200 ,220, null);
-		//Determine turn order by using if the turn value is an odd number (intTurn%2 = 1) and intPlayer == 2, then it is player 2's turn and therefore draw arrow next to their checker to indicate turn
-		}else if(this.intTurn % 2 ==1 && intPlayer == 2){
-			g.drawImage(imgArrow, 200 ,120, null);
+		//System.out.println(intArrowX);
+		if(blnWin == false){
+			if (intArrowX >200){
+				intDefArrowX = -2;
+			}else if(intArrowX <= 150){
+				intDefArrowX = 2;
+			}
+			intArrowX = intArrowX + intDefArrowX;
+			g.drawImage(imgArrow, intArrowX, 220, null);
+		}
+		if (blnWin == true){
+			if(intSeconds >= 1){
+				g.drawImage(img1, 500, 0, null);
+			}if(intSeconds >= 2){
+				g.drawImage(img2, 610, 0, null);
+			}if(intSeconds >= 3){
+				g.drawImage(img3, 720, 0, null);
+			}if(intSeconds >= 4){
+				g.drawImage(img4, 830, 0, null);
+			}
+			
 		}
 		
-		//Drawing Opponents piece when they move using ssm coordinates
-		if(blnDraw == true){
-			if(intPlayer == 2){
-				g.drawImage(imgPlayer1, intSSMX, intSSMY, null);
-			}	
-			else if(intPlayer == 1){
-				g.drawImage(imgPlayer2, intSSMX, intSSMY, null);
-			}
-		}
 		
 		//Drawing lines to split up columns
 		g.setColor(Color.GRAY);
@@ -192,10 +196,31 @@ public class ConnectPanel extends JPanel{
 		}catch (IOException e){
 			System.out.println("cannot load image6");
 		}
+		try{
+			img1 = ImageIO.read(new File("resources/1.png"));
+		}catch (IOException e){
+			System.out.println("cannot load image6");
+		}
+		try{
+			img2 = ImageIO.read(new File("resources/2.png"));
+		}catch (IOException e){
+			System.out.println("cannot load image6");
+		}
+		try{
+			img3 = ImageIO.read(new File("resources/3.png"));
+		}catch (IOException e){
+			System.out.println("cannot load image6");
+		}
+		try{
+			img4 = ImageIO.read(new File("resources/4.png"));
+		}catch (IOException e){
+			System.out.println("cannot load image6");
+		}
 	}
 	//Constructor
-	public ConnectPanel (String[] strTheme){
+	public demoPanel (String[] strTheme, int[][] intBoard){
 		this.strTheme = strTheme;
+		this.intBoard = intBoard;
 		System.out.println("loading new images");
 		loadTheme(strTheme);
 	}

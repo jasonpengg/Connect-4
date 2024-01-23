@@ -10,6 +10,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	calculations calcs = new calculations();
 	JFrame theFrame = new JFrame("Connect 4");
 	ConnectPanel thePanel = new ConnectPanel(calcs.getTheme("Standard Theme"));
+	demoPanel dPanel = new demoPanel(calcs.getTheme("Standard Theme"),calcs.loadDemoBoard());
 	themesPanel themePanel = new themesPanel();
 	JPanel SSMPanel = new JPanel();
 	JPanel helpSSMPanel = new JPanel();
@@ -33,6 +34,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	JTextField ipField = new JTextField();
 	JTextField portField = new JTextField();
 	JTextField userField = new JTextField(); 
+	JButton demoButton = new JButton("Demonstration");
 	
 	//Properties for game panel 
 	JTextArea chatArea = new JTextArea();
@@ -60,6 +62,8 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	
 	//Timer for frame refresh rate
 	Timer theTimer = new Timer(1000/60, this);
+	Timer demoTimer = new Timer(1000, this);
+	int intSeconds = 0;
 	
 	//Theme array
 	String[] strTheme = new String[5];
@@ -93,6 +97,8 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	//setting the boolean game value to 
 	boolean blnGame = false;
 	
+	//variables for help screen
+	boolean blnHelpDemo = false;
 
 
 	/*
@@ -110,6 +116,10 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			thePanel.intDraggedX = evt.getX();
 			thePanel.intDraggedY = evt.getY();
 			ssm.sendText("Location"+ strSplit+ (thePanel.intDraggedX - thePanel.intDiffX)+ strSplit + (thePanel.intDraggedY - thePanel.intDiffY));
+		}
+		if(blnHelpDemo == true){
+			dPanel.intDraggedX = evt.getX();
+			dPanel.intDraggedY = evt.getY();
 		}
 	}
 	public void mouseExited(MouseEvent evt){
@@ -139,10 +149,24 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			
 			thePanel.blnPlaced = false;
 			thePanel.blnPressed = false;
-			calcs.printBoard();
+			calcs.printBoard(calcs.intBoard);
 		}
 		thePanel.intDraggedX = -1000;
 		thePanel.intDraggedY = -1000;
+		
+		if(blnHelpDemo == true && dPanel.blnPlaced == true){
+			dPanel.blnPressed = false;
+			dPanel.intDraggedX = -1000;
+			dPanel.intDraggedY = -1000;
+			intReleasedX = evt.getX();
+			intReleasedY = evt.getY();
+			if(intReleasedX >= 830 && intReleasedX <= 940 && intReleasedY < 100){
+				System.out.println("win");
+				dPanel.blnWin = true;
+				demoTimer.start();
+			}
+		}
+		
 	}
 	public void mousePressed(MouseEvent evt){
 		thePanel.intPressedX = evt.getX();
@@ -162,6 +186,11 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 				thePanel.blnPressed = true;
 				System.out.println("Pressed = " +thePanel.intPressedX +" "+ thePanel.intPressedY);
 			}
+		}
+		if(blnHelpDemo == true){
+			dPanel.intPressedX = evt.getX();
+			dPanel.intPressedY = evt.getY();
+			dPanel.blnPressed = true;
 		}
 		
 	}
@@ -226,26 +255,34 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		
 		if(evt.getSource() == getIPButton){
 			chatArea.append(ssm.getMyAddress() + "\n");
-			
 		}
-		
-		
 		
 		if(evt.getSource() == sendButton){
-			System.out.println("send: "+sendField.getText());
-			chatArea.append(strUsername +": "+sendField.getText() +"\n");
-			ssm.sendText("Message"+strSplit+strUsername+strSplit+sendField.getText());
-			sendField.setText("");
-			//[message][Username][MMessage]
+			if(blnHelpDemo == true){
+				System.out.println("send");
+				chatArea.append("You: "+sendField.getText() +"\n");
+			}else if(blnHelpDemo == false){
+				System.out.println("send: "+sendField.getText());
+				chatArea.append(strUsername +": "+sendField.getText() +"\n");
+				ssm.sendText("Message"+strSplit+strUsername+strSplit+sendField.getText());
+				sendField.setText("");
+				//[message][Username][MMessage]
+			}
 		}
 		if(evt.getSource() == sendField){
-			System.out.println("send: "+sendField.getText());
-			chatArea.append(strUsername +": "+sendField.getText() +"\n");
-			ssm.sendText("Message"+strSplit+strUsername+strSplit+sendField.getText());
-			sendField.setText("");
+			if(blnHelpDemo == true){
+				chatArea.append("You: "+sendField.getText() +"\n");
+			}else if(blnHelpDemo == false){
+				System.out.println("send: "+sendField.getText());
+				chatArea.append(strUsername +": "+sendField.getText() +"\n");
+				ssm.sendText("Message"+strSplit+strUsername+strSplit+sendField.getText());
+				sendField.setText("");
+				//[message][Username][MMessage]
+			}
 		}
 		if (evt.getSource() == hostButton){
 			if(checkEmpty(false) == false){
+				initializeHomePanel();
 				System.out.println("Start socket in server mode");
 				ssm = new SuperSocketMaster(Integer.parseInt(portField.getText()), this);
 				ssm.connect();
@@ -259,6 +296,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		
 		if (evt.getSource() == joinButton){
 			if(checkEmpty(true) == false){
+				initializeHomePanel();
 				System.out.println("Start socket in client mode");
 				ssm = new SuperSocketMaster(ipField.getText(), Integer.parseInt(portField.getText()),this);
 				ssm.connect();
@@ -276,6 +314,11 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			theFrame.setContentPane(helpSSMPanel);
 			theFrame.pack();
 			theFrame.repaint();
+		}if(evt.getSource() == demoButton){
+			theFrame.setContentPane(dPanel);
+			theFrame.pack();
+			theFrame.repaint();
+			blnHelpDemo = true;
 		}if (evt.getSource() == helpMenu){
 			theFrame.setContentPane(helpGamePanel);
 			theFrame.pack();
@@ -327,8 +370,33 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		//--------------ETC-------------------//
 		
 		if(evt.getSource() == theTimer){
-			thePanel.repaint();
-			//[Game][x][y]
+			if(blnHelpDemo == false){
+				thePanel.repaint();
+			}else if(blnHelpDemo == true){
+				dPanel.repaint();
+			}
+		}
+		if(evt.getSource() == demoTimer){
+			intSeconds = intSeconds + 1;
+			dPanel.intSeconds = intSeconds;
+			if(intSeconds >= 6){
+				theFrame.setContentPane(winPanel);
+				theFrame.pack();
+				theFrame.repaint();
+				playAgain.setVisible(false);
+				if(intSeconds >= 8){
+					demoTimer.stop();
+					intSeconds = 0;
+					dPanel.intSeconds = 0;
+					dPanel.blnWin = false;
+					blnHelpDemo = false;
+					playAgain.setVisible(true);
+					theFrame.setContentPane(SSMPanel);
+					theFrame.pack();
+					theFrame.repaint();
+				}
+			}
+			
 		}
 		
 		
@@ -340,6 +408,23 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		theFrame.repaint();
 		theBar.setVisible(false);
 	}
+	public void initializeHomePanel(){
+		theScroll.setSize(480,350);
+		theScroll.setLocation(10,310);
+		chatArea.setText("");
+		thePanel.add(theScroll);
+		
+		sendField.setSize(400,30);
+		sendField.setLocation(10,680);
+		sendField.setText("");
+		thePanel.add(sendField);
+		
+		sendButton.setSize(80, 30);
+		sendButton.setLocation(410, 680);
+		thePanel.add(sendButton);
+		
+		
+	}
 	public void changeToHomePanel(){
 		theBar.setVisible(true);
 		theFrame.setContentPane(thePanel);
@@ -347,6 +432,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		theFrame.repaint();
 			
 	} 
+	
 	public void checkPlayer(){
 		if(intPlayer == 1){
 			strPlayer1 = strUsername;
@@ -384,22 +470,77 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		boolean blnIP = false; 
 		boolean blnPort = false;
 		boolean blnUser = false;
+		int intTimes = 0;
+		//Checks if the textfield is empty 
 		if(ipField.getText().isEmpty() == true&&blnCheckIP == true){
 			invalidLabel1.setVisible(true);
+			invalidLabel1.setText("invalid: Cannot be empty");
 			blnIP = true;
 		}if(!ipField.getText().isEmpty() == true||blnCheckIP == false){
 			invalidLabel1.setVisible(false);
+			invalidLabel1.setText("invalid: Cannot be empty");
 		}if(portField.getText().isEmpty() == true){
 			invalidLabel2.setVisible(true);
+			invalidLabel2.setText("invalid: Cannot be empty");
 			blnPort = true;
 		}if(!portField.getText().isEmpty() == true){
 			invalidLabel2.setVisible(false);
+			invalidLabel2.setText("invalid: Cannot be empty");
 		}if(userField.getText().isEmpty() == true){
 			invalidLabel3.setVisible(true);
+			invalidLabel3.setText("invalid: Cannot be empty");
 			blnUser = true;
 		}if(!userField.getText().isEmpty() == true){
 			invalidLabel3.setVisible(false);
+			invalidLabel3.setText("invalid: Cannot be empty");
 		}
+		if(blnIP == false && blnCheckIP == true){
+			try{
+				String strInput = ipField.getText();
+				int intLength = strInput.length();
+				System.out.println(intLength);
+				String strCheck = "";
+				String strIP = "";
+				for (int intCount = 0; intCount < intLength; intCount++){
+					strCheck = strInput.substring(intCount, intCount+1);
+					if(strCheck.equals(".")){
+						strCheck = "";
+					}
+					strIP = strIP + strCheck;
+				}
+				Integer.parseInt(strIP);
+				
+			}catch(NumberFormatException e){
+				System.out.println("caught");
+				blnIP = true; 
+				invalidLabel1.setVisible(true);
+				invalidLabel1.setText("Must input a valid IP");
+			}
+		}
+		if(blnPort == false){
+			try{
+				String strInput = portField.getText();
+				int intLength = strInput.length();
+				String strCheck = "";
+				String strIP = "";
+				for (int intCount = 0; intCount < intLength; intCount++){
+					strCheck = strInput.substring( intCount, intCount+1);
+					if(strCheck.equals(".")){
+						strCheck = "";
+					}
+					strIP = strIP + strCheck;
+				}
+				Integer.parseInt(strIP);
+				
+			}catch(NumberFormatException e){
+				System.out.println("caught");
+				blnPort = true; 
+				invalidLabel2.setVisible(true);
+				invalidLabel2.setText("Must input a valid Port Number");
+			}
+		}
+	
+		
 		System.out.println("Port: "+blnPort+" IP: "+blnIP+" USER: "+blnUser);
 		if(blnPort == true||blnUser == true){
 			return true;
@@ -474,6 +615,10 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		SSMPanel.add(helpSSMMenu);
 		helpSSMMenu.addActionListener(this);
 		
+		demoButton.setSize(300,50);
+		demoButton.setLocation(750,550);
+		SSMPanel.add(demoButton);
+		demoButton.addActionListener(this);
 	
 		theFrame.setContentPane(thePanel);
 		
@@ -519,9 +664,28 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		P2Score. setLocation(10,120);
 		thePanel.add(P2Score);
 
-
 		thePanel.addMouseListener(this);
 		thePanel.addMouseMotionListener(this);
+		//----------------------------------------------------DEMONSTRATION PANEL----------------------------------//
+		dPanel.strTheme = calcs.getTheme("Standard Theme");
+		dPanel.setPreferredSize(new Dimension(1280, 720));
+		dPanel.setLayout(null);
+		chatArea.setEditable(false);
+		theScroll.setSize(480,350);
+		theScroll.setLocation(10,310);
+		dPanel.add(theScroll);
+		
+		sendField.setSize(400,30);
+		sendField.setLocation(10,680);
+		dPanel.add(sendField);
+
+		
+		sendButton.setSize(80, 30);
+		sendButton.setLocation(410, 680);
+		dPanel.add(sendButton);
+
+		dPanel.addMouseListener(this);
+		dPanel.addMouseMotionListener(this);
 		// ------------------------------------------------ THEME PANEL --------------------------------------------//
 		
 		themePanel.setLayout(null);

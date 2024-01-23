@@ -3,7 +3,7 @@ class calculations{
 	private int intCurrentPlayerTurn = 0;
 	// [Columns] [Rows] 
 	// [x][y]
-	private int intBoard[][] = new int[7][6];
+	public int intBoard[][] = new int[7][6];
 	public int intRow = 0;
 	private int intPiece = 1;
 	private String strPlayer = "1";
@@ -21,7 +21,7 @@ class calculations{
 		BufferedReader kb = new BufferedReader(irs);
 		String[] themeArray = new String[5];
 		try{
-			FileReader fr = new FileReader ("Themes.txt");
+			FileReader fr = new FileReader ("resources/Themes.txt");
 			BufferedReader themeReader = new BufferedReader(fr);
 			String strInput ="";
 			
@@ -35,7 +35,7 @@ class calculations{
 				strInput = themeReader.readLine();
 				//StrInput will contain an extraline or null if its at the end 
 			}
-				//closing filreader
+				//closing filereader
 				themeReader.close();
 		//catching exception 
 		}catch(IOException e){
@@ -56,7 +56,7 @@ class calculations{
 	
 	//Printing board array for testing 
 	
-	public void printBoard(){
+	public void printBoard(int intBoard[][]){
 		for(int intCount = 0; intCount <6; intCount++){
 			for(int intCount2 = 0; intCount2 <7; intCount2++){
 				System.out.print(intBoard[intCount2][intCount]);
@@ -253,6 +253,32 @@ class calculations{
 			return "tie";
 		}
 		return "0";
+	}
+	//Load Interactive Help Demo 
+
+	public int[][] loadDemoBoard(){
+		InputStreamReader irs = new InputStreamReader(System.in); 
+		BufferedReader kb = new BufferedReader(irs);
+		int[][] Demoboard = new int[7][6];
+		try{
+			FileReader fr = new FileReader ("resources/Demoboard.txt");
+			BufferedReader boardReader = new BufferedReader(fr);
+			String strLine ="";
+			String[] strSplit;
+			for (int intColumn =0; intColumn < 6; intColumn++){
+				strLine = boardReader.readLine();
+				System.out.println(strLine);
+				strSplit = strLine.split(",");
+				for (int introw = 0; introw <7; introw++){
+					Demoboard[introw][intColumn] = Integer.parseInt(strSplit[introw]);
+				}
+			}
+			boardReader.close();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		printBoard(Demoboard);
+		return Demoboard;
 	}
 	
 	//Contructor
