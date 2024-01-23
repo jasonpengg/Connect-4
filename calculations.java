@@ -255,7 +255,6 @@ class calculations{
 		return "0";
 	}
 	//Load Interactive Help Demo 
-
 	public int[][] loadDemoBoard(){
 		InputStreamReader irs = new InputStreamReader(System.in); 
 		BufferedReader kb = new BufferedReader(irs);
@@ -267,7 +266,6 @@ class calculations{
 			String[] strSplit;
 			for (int intColumn =0; intColumn < 6; intColumn++){
 				strLine = boardReader.readLine();
-				System.out.println(strLine);
 				strSplit = strLine.split(",");
 				for (int introw = 0; introw <7; introw++){
 					Demoboard[introw][intColumn] = Integer.parseInt(strSplit[introw]);
@@ -277,7 +275,6 @@ class calculations{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		printBoard(Demoboard);
 		return Demoboard;
 	}
 	

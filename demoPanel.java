@@ -19,20 +19,10 @@ public class demoPanel extends JPanel{
 	int intYellowY = 110;
 	int intDiffX = -5000;
 	int intDiffY = -5000;
-	boolean blnDiff = true;
 	boolean blnPressed = false;
-	boolean blnRed = true;
-	boolean blnYellow = true;
 	boolean blnPlaced = false;
-	
 	int intArrowX = 150;
 	int intDefArrowX = 0;
-	
-	//SSM variables
-	int intSSMX = 0;
-	int intSSMY = 0;
-	int intPlayer = 0;
-	boolean blnDraw = false;
 	
 	//Theme variables 
 	BufferedImage imgbackground = null;
@@ -48,23 +38,11 @@ public class demoPanel extends JPanel{
 	BufferedImage img4 = null;
 	String[] strTheme = {"","","","",""};
 	
-	//Game variables
-	int intTurn = 0;
 	int intBoard[][];
 	int intSeconds = 0;
 	
-	double dblTime = 0;
 	
 	boolean blnWin = false;
-	
-	
-	// Methods
-	// override how JComponent is painted 
-	// Set the Red and Yellow pieces to coordinates 
-	
-	//"Space Theme"
-	//"Standard Theme"
-	//"Christmas Theme"
 	
 	public void paintComponent(Graphics g){
 		//Sets Background 
@@ -227,7 +205,7 @@ public class demoPanel extends JPanel{
 	public demoPanel (String[] strTheme, int[][] intBoard){
 		this.strTheme = strTheme;
 		this.intBoard = intBoard;
-		System.out.println("loading new images");
+		//System.out.println("loading new images");
 		loadTheme(strTheme);
 	}
 }

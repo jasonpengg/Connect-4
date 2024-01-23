@@ -257,7 +257,7 @@ public class ConnectPanel extends JPanel{
 	 */
 	public ConnectPanel (String[] strTheme){
 		this.strTheme = strTheme;
-		System.out.println("loading new images");
+		//System.out.println("loading new images");
 		loadTheme(strTheme);
 	}
 }

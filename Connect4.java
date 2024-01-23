@@ -14,7 +14,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	themesPanel themePanel = new themesPanel();
 	JPanel SSMPanel = new JPanel();
 	ssmhelpscreenpanel helpSSMPanel = new ssmhelpscreenpanel();
-	JPanel helpGamePanel = new JPanel();
+	helpPanel helpGamePanel = new helpPanel();
 	winScreenPanel winPanel = new winScreenPanel();
 
 
@@ -412,6 +412,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			intSeconds = intSeconds + 1;
 			dPanel.intSeconds = intSeconds;
 			if(intSeconds >= 6){
+				winPanel.blnWin = true;
 				theFrame.setContentPane(winPanel);
 				theFrame.pack();
 				theFrame.repaint();
@@ -486,6 +487,8 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			winLabel.setText("The Winner is: " +strPlayer1);
 			intPlayer1Score++;
 			P1Score.setText(strPlayer1 + ": " +intPlayer1Score+"W");
+			winPanel.blnWin = true;
+			theBar.setVisible(false);
 			theFrame.setContentPane(winPanel);
 			theFrame.pack();
 			theFrame.repaint();
@@ -493,11 +496,15 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			winLabel.setText("The Winner is: " +strPlayer2);
 			intPlayer2Score++;
 			P2Score.setText(strPlayer2 + ": " +intPlayer2Score+"W");
+			theBar.setVisible(false);
+			winPanel.blnWin = true;
 			theFrame.setContentPane(winPanel);
 			theFrame.pack();
 			theFrame.repaint();
 		}else if(calcs.checkResult().equals("tie")){
 			winLabel.setText("Tie! nobody wins");
+			theBar.setVisible(false);
+			winPanel.blnWin = false;
 			theFrame.setContentPane(winPanel);
 			theFrame.pack();
 			theFrame.repaint();
@@ -579,7 +586,28 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 				invalidLabel2.setText("Must input a valid Port Number");
 			}
 		}
-	
+		//Checks length of name
+		if(blnUser == false){
+			String strInput = userField.getText();
+			int intLength = strInput.length();
+			System.out.println(intLength);
+			if(intLength >12){
+				blnUser = true;
+				invalidLabel3.setVisible(true);
+				invalidLabel3.setText("Must be less than 12 characters");
+			}
+		}
+		//checks for Port length
+		if(blnPort == false){
+			String strInput = portField.getText();
+			int intLength = strInput.length();
+			System.out.println(intLength);
+			if(intLength >5){
+				blnUser = true;
+				invalidLabel2.setVisible(true);
+				invalidLabel2.setText("Must be less than 5 numbersh");
+			}
+		}
 		
 		System.out.println("Port: "+blnPort+" IP: "+blnIP+" USER: "+blnUser);
 		//if statments to check conditions and finally return boolean value 
@@ -767,13 +795,14 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		
 		winPanel.add(playAgain);
 		
-		//------------------------------------------------HELP PANELS-------------------------------------------------//
+		//------------------------------------------------HELP PANEL-------------------------------------------------//
 		//Setting up panel and addtional Jcomponents of the panel
 		helpGamePanel.setPreferredSize(new Dimension(1280, 720));
 		helpGamePanel.setLayout(null);
-	
+
 		returnHomeMenu.setSize(300,50);
-		returnHomeMenu.setLocation(750,550);
+		returnHomeMenu.setLocation(100,450);
+		returnHomeMenu.setForeground(Color.BLUE);
 		helpGamePanel.add(returnHomeMenu);
 		returnHomeMenu.addActionListener(this);
 		
