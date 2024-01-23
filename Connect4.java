@@ -13,9 +13,9 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	demoPanel dPanel = new demoPanel(calcs.getTheme("Standard Theme"),calcs.loadDemoBoard());
 	themesPanel themePanel = new themesPanel();
 	JPanel SSMPanel = new JPanel();
-	JPanel helpSSMPanel = new JPanel();
+	ssmhelpscreenpanel helpSSMPanel = new ssmhelpscreenpanel();
 	JPanel helpGamePanel = new JPanel();
-	JPanel winPanel = new JPanel();
+	winScreenPanel winPanel = new winScreenPanel();
 
 
 	//Properties for SSM Panel
@@ -771,16 +771,18 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		//Setting up panel and addtional Jcomponents of the panel
 		helpGamePanel.setPreferredSize(new Dimension(1280, 720));
 		helpGamePanel.setLayout(null);
-		returnHomeMenu.setSize(300,100);
-		returnHomeMenu.setLocation(60, 100);
-		returnHomeMenu.addActionListener(this);
+	
+		returnHomeMenu.setSize(300,50);
+		returnHomeMenu.setLocation(750,550);
 		helpGamePanel.add(returnHomeMenu);
+		returnHomeMenu.addActionListener(this);
 		
 		//Setting up panel and addtional Jcomponents of the panel
 		helpSSMPanel.setPreferredSize(new Dimension(1280, 720));
 		helpSSMPanel.setLayout(null);
-		returnSSMMenu.setSize(300,100);
-		returnSSMMenu.setLocation(60, 100);
+		returnSSMMenu.setSize(300,50);
+		returnSSMMenu.setLocation(550, 650);
+		returnSSMMenu.setForeground(Color.BLUE);
 		returnSSMMenu.addActionListener(this);
 		helpSSMPanel.add(returnSSMMenu);
 		

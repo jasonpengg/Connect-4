@@ -35,6 +35,7 @@ public class demoPanel extends JPanel{
 	boolean blnDraw = false;
 	
 	//Theme variables 
+	BufferedImage imgbackground = null;
 	BufferedImage imgPlayer1 = null;
 	BufferedImage imgPlayer2 = null;
 	BufferedImage imgBackground = null;
@@ -67,7 +68,7 @@ public class demoPanel extends JPanel{
 	
 	public void paintComponent(Graphics g){
 		//Sets Background 
-		g.drawImage(imgBackground, 0, 0, null);
+		g.drawImage(imgbackground, 0, 0, null);
 		g.drawImage(imgBoard, 500, 100, null);
 	
 		//Draw red and yellow piece at resting place
@@ -215,6 +216,11 @@ public class demoPanel extends JPanel{
 			img4 = ImageIO.read(new File("resources/4.png"));
 		}catch (IOException e){
 			System.out.println("cannot load image6");
+		}
+		try{
+			imgbackground = ImageIO.read(new File("resources/demohelpscreen.png"));
+		}catch (IOException e){
+			System.out.println("cannot load image7");
 		}
 	}
 	//Constructor
