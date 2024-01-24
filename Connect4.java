@@ -101,7 +101,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	public void mouseMoved(MouseEvent evt){
 		
 	}
-	//If player presses on piece and is their turn get the coordinates of their piece to draw and send over on SSM to opponent so it is drawn on their screen
+	//If player presses on piece and it's their turn get the coordinates of their piece to draw and send over on SSM to opponent so it is drawn on their screen
 	public void mouseDragged(MouseEvent evt){
 		if(calcs.getPlayer().equals(""+intPlayer)&& thePanel.blnPlaced == true){
 			thePanel.intDraggedX = evt.getX();
@@ -186,7 +186,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 				System.out.println("Pressed = " +thePanel.intPressedX +" "+ thePanel.intPressedY);
 			}
 		}
-		//if player is on help demonstration run this code. Code gets coordinates of where mouse clicked
+		//if player is on help demonstration run this code. Code gets coordinates of where mouse was clicked
 		if(blnHelpDemo == true){
 			dPanel.intPressedX = evt.getX();
 			dPanel.intPressedY = evt.getY();
@@ -308,7 +308,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		}
 		
 		//If user presses join button and does not have any empty sections, start up super socket master and join as a client
-		//Also send an intial message to other player to let them know you have joined successfully
+		//Also send an initial message to other player to let them know you have joined successfully
 		if (evt.getSource() == joinButton){
 			if(checkEmpty(true) == false){
 				initializeHomePanel();
@@ -371,7 +371,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 				}else if(strSSMArray[0].equals("Let Go")){
 					thePanel.blnDraw = false;
 					
-				//if the first split of the SSM message is game, compelte calculations based on the game such as turn count
+				//if the first split of the SSM message is game, complete calculations based on the game such as turn count
 				}else if(strSSMArray[0].equals("Game")){
 					thePanel.blnDraw = false;
 					calcs.intRow = Integer.parseInt(strSSMArray[1]);
@@ -381,7 +381,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 					results();
 				}
 			}catch(ArrayIndexOutOfBoundsException e){
-				System.out.println("badlyFormatted Data");
+				System.out.println("Badly Formatted Data");
 			}
 
 		}
@@ -431,7 +431,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		
 		
 	}
-	//Intialize the content pane to the SSM panel and set up frame 
+	//Initialize the content pane to the SSM panel and set up frame 
 	public void initializePanel(){
 		theBar.setVisible(false);
 		theFrame.setContentPane(SSMPanel);
@@ -470,7 +470,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			
 	} 
 	
-	//Method sets the username for both players based on if they're player 1 or two and sets up 'sccore board'
+	//Method sets the username for both players based on if they're player 1 or two and sets up 'score board'
 	public void checkPlayer(){
 		if(intPlayer == 1){
 			strPlayer1 = strUsername;
@@ -611,7 +611,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		}
 		
 		System.out.println("Port: "+blnPort+" IP: "+blnIP+" USER: "+blnUser);
-		//if statments to check conditions and finally return boolean value 
+		//if statements to check conditions and finally return boolean value 
 		if(blnPort == true||blnUser == true){
 			return true;
 		}else if(blnIP == true && blnCheckIP == true){
@@ -622,9 +622,9 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	}
 	// Constructor
 	public Connect4(){
-		//Initiallizing the Game Setup 
+		//Initializing the Game Setup 
 		//---------------------------SSM PANEL ---------------------------------//
-		//Setting up panel and addtional Jcomponents of the panel
+		//Setting up panel and additional Jcomponents of the panel
 		SSMPanel.setPreferredSize(new Dimension(1280, 720));
 		SSMPanel.setLayout(null);
 		
@@ -693,7 +693,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		theFrame.setContentPane(thePanel);
 		
 		//----------------------------------------- GAME PANEL -----------------------------------------------//
-		//Setting up panel and addtional Jcomponents of the panel
+		//Setting up panel and additional Jcomponents of the panel
 		thePanel.intBoard = calcs.getBoard();
 		thePanel.strTheme = calcs.getTheme("Standard Theme");
 		thePanel.setPreferredSize(new Dimension(1280, 720));
@@ -738,7 +738,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		thePanel.addMouseListener(this);
 		thePanel.addMouseMotionListener(this);
 		//----------------------------------------------------DEMONSTRATION PANEL----------------------------------//
-		//Setting up panel and addtional Jcomponents of the panel
+		//Setting up panel and additional Jcomponents of the panel
 		dPanel.strTheme = calcs.getTheme("Standard Theme");
 		dPanel.setPreferredSize(new Dimension(1280, 720));
 		dPanel.setLayout(null);
@@ -759,7 +759,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		dPanel.addMouseListener(this);
 		dPanel.addMouseMotionListener(this);
 		// ------------------------------------------------ THEME PANEL --------------------------------------------//
-		//Setting up panel and addtional Jcomponents of the panel
+		//Setting up panel and additional Jcomponents of the panel
 		themePanel.setLayout(null);
 		themePanel.setPreferredSize(new Dimension(1280, 720));
 		themePanel.setBackground(Color.WHITE);
@@ -782,7 +782,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		theme3.addActionListener(this);
 		themePanel.add(theme3);
 		//----------------------------------------------- WIN PANEL ----------------------------------------------//
-		//Setting up panel and addtional Jcomponents of the panel
+		//Setting up panel and additional Jcomponents of the panel
 		winPanel.setPreferredSize(new Dimension(1280, 720));
 		winPanel.setLayout(null);
 		winLabel.setFont(new Font(winLabel.getFont().getName(), winLabel.getFont().getStyle(), 30));
@@ -790,7 +790,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		winLabel.setLocation(490,300);
 		winPanel.add(winLabel);
 		
-		//Setting up panel and addtional Jcomponents of the panel
+		//Setting up panel and additional Jcomponents of the panel
 		playAgain.setSize(300,100);
 		playAgain.setLocation(490, 400);
 		playAgain.addActionListener(this);
@@ -798,7 +798,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		winPanel.add(playAgain);
 		
 		//------------------------------------------------HELP PANEL-------------------------------------------------//
-		//Setting up panel and addtional Jcomponents of the panel
+		//Setting up panel and additional Jcomponents of the panel
 		helpGamePanel.setPreferredSize(new Dimension(1280, 720));
 		helpGamePanel.setLayout(null);
 
@@ -808,7 +808,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		helpGamePanel.add(returnHomeMenu);
 		returnHomeMenu.addActionListener(this);
 		
-		//Setting up panel and addtional Jcomponents of the panel
+		//Setting up panel and additional Jcomponents of the panel
 		helpSSMPanel.setPreferredSize(new Dimension(1280, 720));
 		helpSSMPanel.setLayout(null);
 		returnSSMMenu.setSize(300,50);

@@ -27,7 +27,7 @@ class calculations{
 			try{
 				BufferedReader themeReader = new BufferedReader(new InputStreamReader(txtClass));
 				String strInput ="";
-				//Reads the file lines until it fines the line that has the theme equal to strTheme input
+				//Reads the file lines until it finds the line that has the theme equal to strTheme input
 				while (!strInput.equals(strTheme)){
 					strInput = themeReader.readLine();
 				}
@@ -35,7 +35,7 @@ class calculations{
 				for (int intCount =0; intCount < 5; intCount++){
 					themeArray[intCount] = strInput;
 					strInput = themeReader.readLine();
-					//StrInput will contain an extraline or null if its at the end 
+					//StrInput will contain an extra line or null if its at the end 
 				}
 					//closing reader
 					themeReader.close();
@@ -56,7 +56,7 @@ class calculations{
 				for (int intCount =0; intCount < 5; intCount++){
 					themeArray[intCount] = strInput;
 					strInput = themeReader.readLine();
-					//StrInput will contain an extraline or null if its at the end 
+					//StrInput will contain an extra line or null if its at the end 
 				}
 					//closing filereader
 					themeReader.close();
