@@ -1,13 +1,16 @@
 import java.io.*;
 class calculations{
+	//Turn count 
 	private int intCurrentPlayerTurn = 0;
-	// [Columns] [Rows] 
-	// [x][y]
+	//Board that the pieces are held in
 	public int intBoard[][] = new int[7][6];
+	//The Row that the piece is being placed it dictated by the player 
 	public int intRow = 0;
+	//What piece needs to be put down, changes according to player turn
 	private int intPiece = 1;
 	private String strPlayer = "1";
 	
+	//Initializes the board 
 	public void initializeboard(){
 		for(int intCount = 0; intCount <7; intCount++){
 			for(int intCount2 = 0; intCount2 <6; intCount2++){
@@ -22,12 +25,8 @@ class calculations{
 		txtClass = this.getClass().getClassLoader().getResourceAsStream("resources/themes.txt");
 		if(txtClass != null){
 			try{
-				InputStreamReader irs = new InputStreamReader(System.in); 
-				BufferedReader kb = new BufferedReader(irs);
-				FileReader fr = new FileReader ("resources/themes.txt");
-				BufferedReader themeReader = new BufferedReader(fr);
+				BufferedReader themeReader = new BufferedReader(new InputStreamReader(txtClass));
 				String strInput ="";
-				
 				//Reads the file lines until it fines the line that has the theme equal to strTheme input
 				while (!strInput.equals(strTheme)){
 					strInput = themeReader.readLine();
@@ -38,20 +37,15 @@ class calculations{
 					strInput = themeReader.readLine();
 					//StrInput will contain an extraline or null if its at the end 
 				}
-					//closing filereader
+					//closing reader
 					themeReader.close();
-		//catching exception 
+			//Catching exception 
 			}catch(IOException e){
 				e.printStackTrace();
 			}
-		
-		
 		}if(txtClass == null){
 			try{
-				InputStreamReader irs = new InputStreamReader(System.in); 
-				BufferedReader kb = new BufferedReader(irs);
-				FileReader fr = new FileReader ("resources/themes.txt");
-				BufferedReader themeReader = new BufferedReader(fr);
+				BufferedReader themeReader = new BufferedReader(new FileReader("resources/themes.txt"));
 				String strInput ="";
 				
 				//Reads the file lines until it fines the line that has the theme equal to strTheme input
@@ -74,18 +68,16 @@ class calculations{
 		//returns the theme array so that display can be drawn accordingly
 		return themeArray;
 	}
+
 	
-	public void printThemeArray(String[] themeArray){
+	//Printing board array for testing 
+		public void printThemeArray(String[] themeArray){
 		for (int intCount = 0; intCount < 5; intCount++){
 			System.out.println(themeArray[intCount]);
 		}
 	}
 	
-	
-	//---------------------printing board----------------------------------//
-	
 	//Printing board array for testing 
-	
 	public void printBoard(int intBoard[][]){
 		for(int intCount = 0; intCount <6; intCount++){
 			for(int intCount2 = 0; intCount2 <7; intCount2++){
@@ -94,7 +86,7 @@ class calculations{
 			System.out.print("\n");
 		}
 	}
-	
+
 	//Method checks if position is within range of game board 
 	public boolean position(int intX, int intY){
 		int intXMin = 390; 
@@ -109,7 +101,7 @@ class calculations{
 		}
 		return false;
 	}
-	//method places piece on board by adjusting board array values accordingly
+	//Method places piece on board by adjusting board array values accordingly
 	public int[][] place(){
 		for(int intCount =5; intCount >= 0; intCount--){
 			if(intBoard[intRow][intCount] == 0){
@@ -132,6 +124,9 @@ class calculations{
 	public int getPlayerTurn(){
 		return intCurrentPlayerTurn;
 	}
+	public int[][] getBoard(){
+		return intBoard;
+	}
 	
 	//Method returns back value for what player it is based on if the current player turn is divisible by 2 
 	//Method also sets the intPiece value in accordance to player so that when it fills array it corresponds to the right player 
@@ -147,11 +142,7 @@ class calculations{
 		}
 		return strPlayer;
 	}
-	//Returns board array 
-	public int[][] getBoard(){
-		return intBoard;
-	}
-	
+
 	//Accessible within only in the program, this method increases the player turn and then calculates whos turn it is by using modulus 
 	//Method also sets the intPiece variable to correspond with "piece" value for each player
 	private void switchPlayer(){
@@ -290,11 +281,8 @@ class calculations{
 		InputStream txtClass = null;
 		txtClass = this.getClass().getClassLoader().getResourceAsStream("resources/demoboard.txt");
 		if(txtClass != null){
-			InputStreamReader irs = new InputStreamReader(System.in); 
-			BufferedReader kb = new BufferedReader(irs);
 			try{
-				FileReader fr = new FileReader ("resources/demoboard.txt");
-				BufferedReader boardReader = new BufferedReader(fr);
+				BufferedReader boardReader = new BufferedReader(new InputStreamReader(txtClass));
 				String strLine ="";
 				String[] strSplit;
 				for (int intColumn =0; intColumn < 6; intColumn++){
@@ -310,11 +298,8 @@ class calculations{
 			}
 		}
 		if(txtClass == null){
-			InputStreamReader irs = new InputStreamReader(System.in); 
-			BufferedReader kb = new BufferedReader(irs);
 			try{
-				FileReader fr = new FileReader ("resources/demoboard.txt");
-				BufferedReader boardReader = new BufferedReader(fr);
+				BufferedReader boardReader = new BufferedReader(new FileReader("resources/demoboard.txt"));
 				String strLine ="";
 				String[] strSplit;
 				for (int intColumn =0; intColumn < 6; intColumn++){
@@ -328,11 +313,9 @@ class calculations{
 			}catch(IOException e){
 				e.printStackTrace();
 			}
-			
 		}
 		return Demoboard;
 	}
-	
 	//Constructor
 	public calculations(){
 	}

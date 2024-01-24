@@ -68,12 +68,9 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	//Theme array
 	String[] strTheme = new String[5];
 	
-	
-	
 	//SSM 
 	String[] strSSMArray = new String[3];
 	SuperSocketMaster ssm = null;
-	
 	
 	//SSM Personal 
 	String strUsername ="";
@@ -84,7 +81,6 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	String strPlayer2 ="";
 	int intPlayer2Score = 0;
 	int intPlayer1Score =0;
-	
 	int intPlayer;
 	
 	//SSM SentOut
@@ -94,21 +90,13 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 	
 	//Setting up the split value (value used to split SSM messages into array)
 	String strSplit = ";-;";
-	//setting the boolean game value to 
+	//Setting the boolean game value. Is true when someone joins the lobby
 	boolean blnGame = false;
 	
-	//variables for help screen
+	//Variables for help screen
 	boolean blnHelpDemo = false;
 
-
-	/*
-	HOW THE CODE WILL WORK: 
-	Mouse listener and MouseMotionLsitener will use booleans to dictate where the piece will be dropped/final place 
-	The mouseReleased will be the final coords of where the piece can go and that will start an action of calculations 
-	Calcuations include: placing a piece into an array, changing player turns, checking for connect 4s, and SSM related stuff 
-	 */
 	// Methods
-	
 	//Overriding mouseMoved method
 	public void mouseMoved(MouseEvent evt){
 		
@@ -279,9 +267,11 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			if(blnHelpDemo == true){
 				System.out.println("send");
 				chatArea.append("You: "+sendField.getText() +"\n");
+				chatArea.setCaretPosition(chatArea.getDocument().getLength());
 			}else if(blnHelpDemo == false){
 				System.out.println("send: "+sendField.getText());
 				chatArea.append(strUsername +": "+sendField.getText() +"\n");
+				chatArea.setCaretPosition(chatArea.getDocument().getLength());
 				ssm.sendText("Message"+strSplit+strUsername+strSplit+sendField.getText());
 				sendField.setText("");
 				//[message][Username][MMessage]
@@ -292,9 +282,11 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		if(evt.getSource() == sendField){
 			if(blnHelpDemo == true){
 				chatArea.append("You: "+sendField.getText() +"\n");
+				chatArea.setCaretPosition(chatArea.getDocument().getLength());
 			}else if(blnHelpDemo == false){
 				System.out.println("send: "+sendField.getText());
 				chatArea.append(strUsername +": "+sendField.getText() +"\n");
+				chatArea.setCaretPosition(chatArea.getDocument().getLength());
 				ssm.sendText("Message"+strSplit+strUsername+strSplit+sendField.getText());
 				sendField.setText("");
 				//[message][Username][Message]
@@ -330,7 +322,6 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 				thePanel.intPlayer = this.intPlayer;
 				strUsername = userField.getText();
 				ssm.sendText("Message"+strSplit+strUsername+strSplit+"has joined the lobby");
-				//chatArea.append(strUsername +": "+sendField.getText() +"\n");
 			}
 		//Setting content pane in accordance to menu button pressed 
 		}if (evt.getSource() == helpSSMMenu){
@@ -364,6 +355,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 				//If the first split of the SSM message is 'message' append it to the chat 
 				if(strSSMArray[0].equals("Message")){
 					chatArea.append(strSSMArray[1]+": "+strSSMArray[2]+"\n");
+					chatArea.setCaretPosition(chatArea.getDocument().getLength());
 					strOpponent = strSSMArray[1];
 					checkPlayer();
 				
@@ -462,6 +454,10 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		sendButton.setSize(80, 30);
 		sendButton.setLocation(410, 680);
 		thePanel.add(sendButton);
+		
+		theScroll.setSize(480,350);
+		theScroll.setLocation(10,310);
+		thePanel.add(theScroll);
 		
 		
 	} 
@@ -703,6 +699,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		thePanel.setPreferredSize(new Dimension(1280, 720));
 		thePanel.setLayout(null);
 		chatArea.setEditable(false);
+		
 		theScroll.setSize(480,350);
 		theScroll.setLocation(10,310);
 		thePanel.add(theScroll);
@@ -833,7 +830,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		mainMenu.addActionListener(this);
 		themeMenu.addActionListener(this);
 		
-		//setting up frame
+		//Setting up frame
 		thePanel.repaint();
 		theFrame.pack();
 		theFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -843,7 +840,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		initializePanel();
 	}
 
-	// Main Method
+	//Main Method
 	public static void main(String[] args){
 		new Connect4();
 	}

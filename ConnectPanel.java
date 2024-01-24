@@ -252,7 +252,7 @@ public class ConnectPanel extends JPanel{
 				System.out.println("cannot load image2");
 			}
 		}
-		//JAR
+		//Loading from Jar File 
 		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[3]);
 		if(imageclass != null){
 			try{
@@ -270,8 +270,7 @@ public class ConnectPanel extends JPanel{
 			}
 		}
 		
-		
-		//Trying to load image using file name from theme array into a variable while catching IOexception 
+		//Loading from Jar File 
 		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[4]);
 		if(imageclass != null){
 			try{
@@ -280,6 +279,7 @@ public class ConnectPanel extends JPanel{
 				System.out.println("Unable to load image file from jar");
 			}
 		}
+		//Trying to load image using file name from theme array into a variable while catching IOexception 
 		if(imageclass == null){
 			try{
 				imgBackground = ImageIO.read(new File("resources/"+strTheme[4]));
@@ -287,8 +287,6 @@ public class ConnectPanel extends JPanel{
 				System.out.println("cannot load image4");
 			}
 		}
-		
-		
 		//Loading from Jar File 
 		imageclass = this.getClass().getResourceAsStream("resources/arrow.png");
 		if(imageclass != null){
@@ -331,7 +329,6 @@ public class ConnectPanel extends JPanel{
 	 */
 	public ConnectPanel (String[] strTheme){
 		this.strTheme = strTheme;
-		//System.out.println("loading new images");
 		loadTheme(strTheme);
 	}
 }

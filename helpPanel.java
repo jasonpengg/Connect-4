@@ -17,11 +17,21 @@ public class helpPanel extends JPanel{
 	}
 	//Constructor
 	public helpPanel(){
-		try{
-			imgBackground = ImageIO.read(new File("resources/helpscreen.png"));
-		}catch (IOException e){
-			System.out.println("cannot load image");
+		InputStream imageclass = null;
+		imageclass = this.getClass().getResourceAsStream("resources/helpscreen.png");
+		if(imageclass != null){
+			try{
+				imgBackground = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
 		}
-
+		if(imgBackground == null){
+			try{
+				imgBackground = ImageIO.read(new File("helppanelpic.png"));
+			}catch(IOException e){
+				System.out.println("Unable to load image");
+			}
+		}
 	}
 }

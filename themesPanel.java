@@ -16,10 +16,21 @@ public class themesPanel extends JPanel{
 	}
 	//Constructor
 	public themesPanel (){
-		try{
-			imgBackground = ImageIO.read(new File("resources/themes.png"));
-		}catch (IOException e){
-			System.out.println("cannot load image");
+		InputStream imageclass = null;
+		imageclass = this.getClass().getResourceAsStream("resources/themes.png");
+		if(imageclass != null){
+			try{
+				imgBackground = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
+		}
+		if(imgBackground == null){
+			try{
+				imgBackground = ImageIO.read(new File("helppanelpic.png"));
+			}catch(IOException e){
+				System.out.println("Unable to load image");
+			}
 		}
 	}
 }

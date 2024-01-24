@@ -16,10 +16,21 @@ public class ssmhelpscreenpanel extends JPanel{
 	}
 	//Constructor
 	public ssmhelpscreenpanel (){
-		try{
-			imgBackground = ImageIO.read(new File("resources/ssmhelp.png"));
-		}catch (IOException e){
-			System.out.println("cannot load image");
+		InputStream imageclass = null;
+		imageclass = this.getClass().getResourceAsStream("resources/ssmhelp.png");
+		if(imageclass != null){
+			try{
+				imgBackground = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
+		}
+		if(imgBackground == null){
+			try{
+				imgBackground = ImageIO.read(new File("helppanelpic.png"));
+			}catch(IOException e){
+				System.out.println("Unable to load image");
+			}
 		}
 	}
 }

@@ -257,7 +257,7 @@ public class demoPanel extends JPanel{
 		
 		//Loading from Jar File
 
-		imageclass = this.getClass().getResourceAsStream("resources/1.png");
+		imageclass = this.getClass().getResourceAsStream("resources/one.png");
 		if(imageclass != null){
 			try{
 				img1 = ImageIO.read(imageclass);
@@ -268,7 +268,7 @@ public class demoPanel extends JPanel{
 		//Trying to load image while catching IOexception 
 		if(imageclass==null){
 			try{
-				img1 = ImageIO.read(new File("resources/1.png"));
+				img1 = ImageIO.read(new File("resources/one.png"));
 			}catch (IOException e){
 				System.out.println("cannot load image6");
 			}
@@ -276,7 +276,7 @@ public class demoPanel extends JPanel{
 		
 		//Loading from Jar File
 	
-		imageclass = this.getClass().getResourceAsStream("resources/2.png");
+		imageclass = this.getClass().getResourceAsStream("resources/two.png");
 		if(imageclass != null){
 			try{
 				img2 = ImageIO.read(imageclass);
@@ -287,7 +287,7 @@ public class demoPanel extends JPanel{
 		//Trying to load image while catching IOexception 
 		if(imageclass==null){
 			try{
-				img2 = ImageIO.read(new File("resources/2.png"));
+				img2 = ImageIO.read(new File("resources/two.png"));
 			}catch (IOException e){
 				System.out.println("cannot load image7");
 			}
@@ -295,7 +295,7 @@ public class demoPanel extends JPanel{
 		
 		//Loading from Jar File
 
-		imageclass = this.getClass().getResourceAsStream("resources/3.png");
+		imageclass = this.getClass().getResourceAsStream("resources/three.png");
 		if(imageclass != null){
 			try{
 				img3 = ImageIO.read(imageclass);
@@ -306,15 +306,14 @@ public class demoPanel extends JPanel{
 		//Trying to load image while catching IOexception 
 		if(imageclass==null){
 			try{
-				img3 = ImageIO.read(new File("resources/3.png"));
+				img3 = ImageIO.read(new File("resources/three.png"));
 			}catch (IOException e){
 				System.out.println("cannot load image6");
 			}
 		} 
 		
 		//Loading from Jar File
-
-		imageclass = this.getClass().getResourceAsStream("resources/4.png");
+		imageclass = this.getClass().getResourceAsStream("resources/four.png");
 		if(imageclass != null){
 			try{
 				img4 = ImageIO.read(imageclass);
@@ -326,14 +325,13 @@ public class demoPanel extends JPanel{
 		//Trying to load image while catching IOexception 
 		if(imageclass==null){
 			try{
-				img4 = ImageIO.read(new File("resources/4.png"));
+				img4 = ImageIO.read(new File("resources/four.png"));
 			}catch (IOException e){
 				System.out.println("cannot load image6");
 			}
 		}
 		
 		//Loading from Jar File
-
 		imageclass = this.getClass().getResourceAsStream("resources/demohelpscreen.png");
 		if(imageclass != null){
 			try{

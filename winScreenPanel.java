@@ -23,15 +23,36 @@ public class winScreenPanel extends JPanel{
 	}
 	//Constructor
 	public winScreenPanel(){
-		try{
-			imgBackground = ImageIO.read(new File("resources/winscreen.png"));
-		}catch (IOException e){
-			System.out.println("cannot load image");
+		InputStream imageclass = null;
+		imageclass = this.getClass().getResourceAsStream("resources/winscreen.png");
+		if(imageclass != null){
+			try{
+				imgBackground = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
 		}
-		try{
-			imgBackground1 = ImageIO.read(new File("resources/tie.png"));
-		}catch (IOException e){
-			System.out.println("cannot load image");
+		if(imgBackground == null){
+			try{
+				imgBackground = ImageIO.read(new File("resources/winscreen.png"));
+			}catch(IOException e){
+				System.out.println("Unable to load image");
+			}
+		}
+		imageclass = this.getClass().getResourceAsStream("resources/tie.png");
+		if(imageclass != null){
+			try{
+				imgBackground1 = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
+		}
+		if(imgBackground1 == null){
+			try{
+				imgBackground1 = ImageIO.read(new File("resources/winscreen.png"));
+			}catch(IOException e){
+				System.out.println("Unable to load image");
+			}
 		}
 	}
 }
