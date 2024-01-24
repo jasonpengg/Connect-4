@@ -17,29 +17,59 @@ class calculations{
 	}
 	//FileIO reading from textfile to put theme into an array
 	public String[] getTheme(String strTheme){
-		InputStreamReader irs = new InputStreamReader(System.in); 
-		BufferedReader kb = new BufferedReader(irs);
 		String[] themeArray = new String[5];
-		try{
-			FileReader fr = new FileReader ("resources/Themes.txt");
-			BufferedReader themeReader = new BufferedReader(fr);
-			String strInput ="";
-			
-			//Reads the file lines until it fines the line that has the theme equal to strTheme input
-			while (!strInput.equals(strTheme)){
-				strInput = themeReader.readLine();
-			}
-			//For loop that loads themeArray with desired theme from txt file
-			for (int intCount =0; intCount < 5; intCount++){
-				themeArray[intCount] = strInput;
-				strInput = themeReader.readLine();
-				//StrInput will contain an extraline or null if its at the end 
-			}
-				//closing filereader
-				themeReader.close();
+		InputStream txtClass = null;
+		txtClass = this.getClass().getClassLoader().getResourceAsStream("resources/themes.txt");
+		if(txtClass != null){
+			try{
+				InputStreamReader irs = new InputStreamReader(System.in); 
+				BufferedReader kb = new BufferedReader(irs);
+				FileReader fr = new FileReader ("resources/themes.txt");
+				BufferedReader themeReader = new BufferedReader(fr);
+				String strInput ="";
+				
+				//Reads the file lines until it fines the line that has the theme equal to strTheme input
+				while (!strInput.equals(strTheme)){
+					strInput = themeReader.readLine();
+				}
+				//For loop that loads themeArray with desired theme from txt file
+				for (int intCount =0; intCount < 5; intCount++){
+					themeArray[intCount] = strInput;
+					strInput = themeReader.readLine();
+					//StrInput will contain an extraline or null if its at the end 
+				}
+					//closing filereader
+					themeReader.close();
 		//catching exception 
-		}catch(IOException e){
-			e.printStackTrace();
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		
+		
+		}if(txtClass == null){
+			try{
+				InputStreamReader irs = new InputStreamReader(System.in); 
+				BufferedReader kb = new BufferedReader(irs);
+				FileReader fr = new FileReader ("resources/themes.txt");
+				BufferedReader themeReader = new BufferedReader(fr);
+				String strInput ="";
+				
+				//Reads the file lines until it fines the line that has the theme equal to strTheme input
+				while (!strInput.equals(strTheme)){
+					strInput = themeReader.readLine();
+				}
+				//For loop that loads themeArray with desired theme from txt file
+				for (int intCount =0; intCount < 5; intCount++){
+					themeArray[intCount] = strInput;
+					strInput = themeReader.readLine();
+					//StrInput will contain an extraline or null if its at the end 
+				}
+					//closing filereader
+					themeReader.close();
+			//catching exception 
+			}catch(IOException e){
+				e.printStackTrace();
+			}
 		}
 		//returns the theme array so that display can be drawn accordingly
 		return themeArray;
@@ -256,29 +286,54 @@ class calculations{
 	}
 	//Load Interactive Help Demo 
 	public int[][] loadDemoBoard(){
-		InputStreamReader irs = new InputStreamReader(System.in); 
-		BufferedReader kb = new BufferedReader(irs);
 		int[][] Demoboard = new int[7][6];
-		try{
-			FileReader fr = new FileReader ("resources/Demoboard.txt");
-			BufferedReader boardReader = new BufferedReader(fr);
-			String strLine ="";
-			String[] strSplit;
-			for (int intColumn =0; intColumn < 6; intColumn++){
-				strLine = boardReader.readLine();
-				strSplit = strLine.split(",");
-				for (int introw = 0; introw <7; introw++){
-					Demoboard[introw][intColumn] = Integer.parseInt(strSplit[introw]);
+		InputStream txtClass = null;
+		txtClass = this.getClass().getClassLoader().getResourceAsStream("resources/demoboard.txt");
+		if(txtClass != null){
+			InputStreamReader irs = new InputStreamReader(System.in); 
+			BufferedReader kb = new BufferedReader(irs);
+			try{
+				FileReader fr = new FileReader ("resources/demoboard.txt");
+				BufferedReader boardReader = new BufferedReader(fr);
+				String strLine ="";
+				String[] strSplit;
+				for (int intColumn =0; intColumn < 6; intColumn++){
+					strLine = boardReader.readLine();
+					strSplit = strLine.split(",");
+					for (int introw = 0; introw <7; introw++){
+						Demoboard[introw][intColumn] = Integer.parseInt(strSplit[introw]);
+					}
 				}
+				boardReader.close();
+			}catch(IOException e){
+				e.printStackTrace();
 			}
-			boardReader.close();
-		}catch(IOException e){
-			e.printStackTrace();
+		}
+		if(txtClass == null){
+			InputStreamReader irs = new InputStreamReader(System.in); 
+			BufferedReader kb = new BufferedReader(irs);
+			try{
+				FileReader fr = new FileReader ("resources/demoboard.txt");
+				BufferedReader boardReader = new BufferedReader(fr);
+				String strLine ="";
+				String[] strSplit;
+				for (int intColumn =0; intColumn < 6; intColumn++){
+					strLine = boardReader.readLine();
+					strSplit = strLine.split(",");
+					for (int introw = 0; introw <7; introw++){
+						Demoboard[introw][intColumn] = Integer.parseInt(strSplit[introw]);
+					}
+				}
+				boardReader.close();
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+			
 		}
 		return Demoboard;
 	}
 	
-	//Contructor
+	//Constructor
 	public calculations(){
 	}
 }

@@ -139,66 +139,215 @@ public class demoPanel extends JPanel{
 	public void loadTheme(String[] strTheme){
 		this.strTheme = strTheme;
 		System.out.println("loading new images");
-		//Trying to load image using file name from theme array into a variable while catching IOexception 
-		try{
-			imgPlayer1 = ImageIO.read(new File("resources/"+strTheme[1]));
-		}catch (IOException e){
-			System.out.println("cannot load image1");
+		
+		//Loading from Jar File
+		InputStream imageclass = null;
+		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[1]);
+		if(imageclass != null){
+			try{
+				imgPlayer1 = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
 		}
 		//Trying to load image using file name from theme array into a variable while catching IOexception 
-		try{
-			imgPlayer2 = ImageIO.read(new File("resources/"+strTheme[2]));
-		}catch (IOException e){
-			System.out.println("cannot load image2");
+		if(imageclass==null){
+			try{
+				imgPlayer1 = ImageIO.read(new File("resources/"+strTheme[1]));
+			}catch (IOException e){
+				System.out.println("cannot load image1");
+			}	
+		}
+		
+		
+		//Loading from Jar File
+
+		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[2]);
+		if(imageclass != null){
+			try{
+				imgPlayer2 = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
 		}
 		//Trying to load image using file name from theme array into a variable while catching IOexception 
-		try{
-			imgBoard= ImageIO.read(new File("resources/"+strTheme[3]));
-		}catch (IOException e){
-			System.out.println("cannot load image3");
+		if(imageclass==null){
+			try{
+				imgPlayer2 = ImageIO.read(new File("resources/"+strTheme[2]));
+			}catch (IOException e){
+				System.out.println("cannot load image2");
+			}
+		}
+		
+		//Loading from Jar File
+
+		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[3]);
+		if(imageclass != null){
+			try{
+				imgBoard = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
 		}
 		//Trying to load image using file name from theme array into a variable while catching IOexception 
-		try{
-			imgBackground = ImageIO.read(new File("resources/"+strTheme[4]));
-		}catch (IOException e){
-			System.out.println("cannot load image4");
+		if(imageclass==null){
+			try{
+				imgBoard= ImageIO.read(new File("resources/"+strTheme[3]));
+			}catch (IOException e){
+				System.out.println("cannot load image3");
+			}
+		}
+		
+		//Loading from Jar File
+
+		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[4]);
+		if(imageclass != null){
+			try{
+				imgBackground = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
+		}
+		//Trying to load image using file name from theme array into a variable while catching IOexception 
+		if(imageclass==null){
+			try{
+				imgBackground = ImageIO.read(new File("resources/"+strTheme[4]));
+			}catch (IOException e){
+				System.out.println("cannot load image4");
+			}
+		}
+		
+		//Loading from Jar File
+	
+		imageclass = this.getClass().getResourceAsStream("resources/arrow.png");
+		if(imageclass != null){
+			try{
+				imgArrow = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
 		}
 		//Trying to load image while catching IOException 
-		try{
-			imgArrow = ImageIO.read(new File("resources/arrow.png"));
-		}catch (IOException e){
-			System.out.println("cannot load image5");
+		if(imageclass==null){
+			try{
+				imgArrow = ImageIO.read(new File("resources/arrow.png"));
+			}catch (IOException e){
+				System.out.println("cannot load image5");
+			}
+		}
+		
+		//Loading from Jar File
+
+		imageclass = this.getClass().getResourceAsStream("resources/highlight.png");
+		if(imageclass != null){
+			try{
+				imgHighlight = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
+		}
+		//Trying to load image while catching IOexception
+		if(imageclass==null){ 
+			try{
+				imgHighlight = ImageIO.read(new File("resources/highlight.png"));
+			}catch (IOException e){
+				System.out.println("cannot load image6");
+			}
+		} 
+		
+		//Loading from Jar File
+
+		imageclass = this.getClass().getResourceAsStream("resources/1.png");
+		if(imageclass != null){
+			try{
+				img1 = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
 		}
 		//Trying to load image while catching IOexception 
-		try{
-			imgHighlight = ImageIO.read(new File("resources/highlight.png"));
-		}catch (IOException e){
-			System.out.println("cannot load image6");
+		if(imageclass==null){
+			try{
+				img1 = ImageIO.read(new File("resources/1.png"));
+			}catch (IOException e){
+				System.out.println("cannot load image6");
+			}
 		}
-		try{
-			img1 = ImageIO.read(new File("resources/1.png"));
-		}catch (IOException e){
-			System.out.println("cannot load image6");
+		
+		//Loading from Jar File
+	
+		imageclass = this.getClass().getResourceAsStream("resources/2.png");
+		if(imageclass != null){
+			try{
+				img2 = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
 		}
-		try{
-			img2 = ImageIO.read(new File("resources/2.png"));
-		}catch (IOException e){
-			System.out.println("cannot load image6");
+		//Trying to load image while catching IOexception 
+		if(imageclass==null){
+			try{
+				img2 = ImageIO.read(new File("resources/2.png"));
+			}catch (IOException e){
+				System.out.println("cannot load image7");
+			}
 		}
-		try{
-			img3 = ImageIO.read(new File("resources/3.png"));
-		}catch (IOException e){
-			System.out.println("cannot load image6");
+		
+		//Loading from Jar File
+
+		imageclass = this.getClass().getResourceAsStream("resources/3.png");
+		if(imageclass != null){
+			try{
+				img3 = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
 		}
-		try{
-			img4 = ImageIO.read(new File("resources/4.png"));
-		}catch (IOException e){
-			System.out.println("cannot load image6");
+		//Trying to load image while catching IOexception 
+		if(imageclass==null){
+			try{
+				img3 = ImageIO.read(new File("resources/3.png"));
+			}catch (IOException e){
+				System.out.println("cannot load image6");
+			}
+		} 
+		
+		//Loading from Jar File
+
+		imageclass = this.getClass().getResourceAsStream("resources/4.png");
+		if(imageclass != null){
+			try{
+				img4 = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
 		}
-		try{
-			imgbackground = ImageIO.read(new File("resources/demohelpscreen.png"));
-		}catch (IOException e){
-			System.out.println("cannot load image7");
+		
+		//Trying to load image while catching IOexception 
+		if(imageclass==null){
+			try{
+				img4 = ImageIO.read(new File("resources/4.png"));
+			}catch (IOException e){
+				System.out.println("cannot load image6");
+			}
+		}
+		
+		//Loading from Jar File
+
+		imageclass = this.getClass().getResourceAsStream("resources/demohelpscreen.png");
+		if(imageclass != null){
+			try{
+				imgbackground = ImageIO.read(imageclass);
+			}catch(IOException e){
+				System.out.println("Unable to load image file from jar");
+			}
+		}
+		if(imageclass==null){
+			try{
+				imgbackground = ImageIO.read(new File("resources/demohelpscreen.png"));
+			}catch (IOException e){
+				System.out.println("cannot load image7");
+			}
 		}
 	}
 	//Constructor
