@@ -354,39 +354,44 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 		
 		if(evt.getSource() == ssm){
 			//split up incoming ssm message by ;-; as the 'splitting value'
-			String[] strSSMArray = ssm.readText().split(strSplit);
-			//If the message of 'has joined the lobby' is recieved the game is initalized and players can now play
-			if(strSSMArray[2].equals("has joined the lobby")){
-				ssm.sendText("Message"+strSplit+strUsername+strSplit+"is the host");
-				blnGame = true;
-			}
-			//If the first split of the SSM message is 'message' append it to the chat 
-			if(strSSMArray[0].equals("Message")){
-				chatArea.append(strSSMArray[1]+": "+strSSMArray[2]+"\n");
-				strOpponent = strSSMArray[1];
-				checkPlayer();
-			
-			//if the first split of the array is 'Location', set values of intSSMX and intSSMY to draw in calculations/gui panel
-			}else if(strSSMArray[0].equals("Location")){
-				//thePanel.drawPiece(strSSMArray);
-				thePanel.intSSMX = Integer.parseInt(strSSMArray[1]); 
-				thePanel.intSSMY = Integer.parseInt(strSSMArray[2]); 
-				thePanel.blnDraw = true;
-				//BLN draw needs to be true when ARRAY [0] = game
-			
-			//If SSM message first split is let go, stop drawing the opponents piece
-			}else if(strSSMArray[0].equals("Let Go")){
-				thePanel.blnDraw = false;
+			try{
+				String[] strSSMArray = ssm.readText().split(strSplit);
+				//If the message of 'has joined the lobby' is recieved the game is initalized and players can now play
+				if(strSSMArray[2].equals("has joined the lobby")){
+					ssm.sendText("Message"+strSplit+strUsername+strSplit+"is the host");
+					blnGame = true;
+				}
+				//If the first split of the SSM message is 'message' append it to the chat 
+				if(strSSMArray[0].equals("Message")){
+					chatArea.append(strSSMArray[1]+": "+strSSMArray[2]+"\n");
+					strOpponent = strSSMArray[1];
+					checkPlayer();
 				
-			//if the first split of the SSM message is game, compelte calculations based on the game such as turn count
-			}else if(strSSMArray[0].equals("Game")){
-				thePanel.blnDraw = false;
-				calcs.intRow = Integer.parseInt(strSSMArray[1]);
-				thePanel.intBoard = calcs.place();
-				thePanel.intTurn = calcs.getPlayerTurn();
-				turnLabel.setText("Turn Count: "+calcs.getPlayerTurn());
-				results();
+				//if the first split of the array is 'Location', set values of intSSMX and intSSMY to draw in calculations/gui panel
+				}else if(strSSMArray[0].equals("Location")){
+					//thePanel.drawPiece(strSSMArray);
+					thePanel.intSSMX = Integer.parseInt(strSSMArray[1]); 
+					thePanel.intSSMY = Integer.parseInt(strSSMArray[2]); 
+					thePanel.blnDraw = true;
+					//BLN draw needs to be true when ARRAY [0] = game
+				
+				//If SSM message first split is let go, stop drawing the opponents piece
+				}else if(strSSMArray[0].equals("Let Go")){
+					thePanel.blnDraw = false;
+					
+				//if the first split of the SSM message is game, compelte calculations based on the game such as turn count
+				}else if(strSSMArray[0].equals("Game")){
+					thePanel.blnDraw = false;
+					calcs.intRow = Integer.parseInt(strSSMArray[1]);
+					thePanel.intBoard = calcs.place();
+					thePanel.intTurn = calcs.getPlayerTurn();
+					turnLabel.setText("Turn Count: "+calcs.getPlayerTurn());
+					results();
+				}
+			}catch(ArrayIndexOutOfBoundsException e){
+				System.out.println("badlyFormatted Data");
 			}
+
 		}
 		//If the players press play again button enable the play again method to start the game over
 		if(evt.getSource() == playAgain){
