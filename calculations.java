@@ -21,7 +21,6 @@ class calculations{
 	//FileIO reading from textfile to put theme into an array
 	public String[] getTheme(String strTheme){
 		String[] themeArray = new String[5];
-<<<<<<< Updated upstream
 		InputStream txtClass = null;
 		txtClass = this.getClass().getClassLoader().getResourceAsStream("resources/themes.txt");
 		if(txtClass != null){
@@ -44,46 +43,6 @@ class calculations{
 			}catch(IOException e){
 				e.printStackTrace();
 			}
-=======
-<<<<<<< HEAD
-		try{
-			FileReader fr = new FileReader ("resources/Themes.txt");
-			BufferedReader themeReader = new BufferedReader(fr);
-			String strInput ="";
-			
-			//Reads the file lines until it finds the line that has the theme equal to strTheme input
-			while (!strInput.equals(strTheme)){
-				strInput = themeReader.readLine();
-			}
-			//For loop that loads themeArray with desired theme from txt file
-			for (int intCount =0; intCount < 5; intCount++){
-				themeArray[intCount] = strInput;
-				strInput = themeReader.readLine();
-				//StrInput will contain an extra line or null if its at the end 
-=======
-		InputStream txtClass = null;
-		txtClass = this.getClass().getClassLoader().getResourceAsStream("resources/themes.txt");
-		if(txtClass != null){
-			try{
-				BufferedReader themeReader = new BufferedReader(new InputStreamReader(txtClass));
-				String strInput ="";
-				//Reads the file lines until it fines the line that has the theme equal to strTheme input
-				while (!strInput.equals(strTheme)){
-					strInput = themeReader.readLine();
-				}
-				//For loop that loads themeArray with desired theme from txt file
-				for (int intCount =0; intCount < 5; intCount++){
-					themeArray[intCount] = strInput;
-					strInput = themeReader.readLine();
-					//StrInput will contain an extraline or null if its at the end 
-				}
-					//closing reader
-					themeReader.close();
-			//Catching exception 
-			}catch(IOException e){
-				e.printStackTrace();
-			}
->>>>>>> Stashed changes
 		}if(txtClass == null){
 			try{
 				BufferedReader themeReader = new BufferedReader(new FileReader("resources/themes.txt"));
@@ -104,10 +63,6 @@ class calculations{
 			//catching exception 
 			}catch(IOException e){
 				e.printStackTrace();
-<<<<<<< Updated upstream
-=======
->>>>>>> 6f942b65e3758fc3c7b50a4ee3d89d08ca78b00a
->>>>>>> Stashed changes
 			}
 		}
 		//returns the theme array so that display can be drawn accordingly
@@ -361,13 +316,6 @@ class calculations{
 		}
 		return Demoboard;
 	}
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-	
-=======
->>>>>>> 6f942b65e3758fc3c7b50a4ee3d89d08ca78b00a
->>>>>>> Stashed changes
 	//Constructor
 	public calculations(){
 	}
