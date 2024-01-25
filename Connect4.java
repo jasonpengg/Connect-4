@@ -362,7 +362,11 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 					thePanel.intTurn = calcs.getPlayerTurn();
 					turnLabel.setText("Turn Count: "+calcs.getPlayerTurn());
 					results();
+				}else if(strSSMArray[0].equals("playagain")){
+					blnGame = true;
 				}
+					
+				
 			}catch(ArrayIndexOutOfBoundsException e){
 				System.out.println("Badly Formatted Data");
 			}
@@ -374,6 +378,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			intPlayerTurn = 0;
 			thePanel.intTurn = 0;
 			changeToHomePanel();
+			ssm.sendText("playagain"+strSplit+"0"+strSplit+"0");
 		}
 		//when the timer goes off, check conditions to decide if drawing is needed
 		if(evt.getSource() == theTimer){
@@ -465,6 +470,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			theFrame.setContentPane(winPanel);
 			theFrame.pack();
 			theFrame.repaint();
+			blnGame = false;
 		}else if(calcs.checkResult().equals ("Player 2")){
 			winLabel.setText("The Winner is: " +strPlayer2);
 			intPlayer2Score++;
@@ -474,6 +480,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			theFrame.setContentPane(winPanel);
 			theFrame.pack();
 			theFrame.repaint();
+			blnGame = false;
 		}else if(calcs.checkResult().equals("tie")){
 			winLabel.setText("Tie! nobody wins");
 			theBar.setVisible(false);
@@ -481,6 +488,7 @@ public class Connect4 implements ActionListener, MouseListener, MouseMotionListe
 			theFrame.setContentPane(winPanel);
 			theFrame.pack();
 			theFrame.repaint();
+			blnGame = false;
 		}
 	}
 	//Checks for validity of the text entered in the text fields

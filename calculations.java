@@ -1,16 +1,25 @@
 import java.io.*;
-class calculations{
-	//Turn count 
+/** Class calculates logic calculations behind the game as well as holds data of the game
+ */
+public class calculations{
+	/**Turn Count for ongoing game
+	 */
 	private int intCurrentPlayerTurn = 0;
-	//Board that the pieces are held in
+	/**Array that represents the board data
+	*/
 	public int intBoard[][] = new int[7][6];
-	//The Row that the piece is being placed it dictated by the player 
+	/**The Row that the piece is being placed in; dictated by the player 
+	 */
 	public int intRow = 0;
-	//What piece needs to be put down, changes according to player turn
+	/**Represents what piece needs to be put down; changes according to player turn
+	 */
 	private int intPiece = 1;
+	/**Represents which players turn it is
+	 */
 	private String strPlayer = "1";
-	
-	//Initializes the board 
+
+	/**Method initializes the board/resets it
+	 */
 	public void initializeboard(){
 		for(int intCount = 0; intCount <7; intCount++){
 			for(int intCount2 = 0; intCount2 <6; intCount2++){
@@ -19,6 +28,10 @@ class calculations{
 		}
 	}
 	//FileIO reading from textfile to put theme into an array
+	/**Using file input and output to read from themes text file to load theme data into an array
+	 * @return strTheme which holds the names of files used to draw the interface for each theme
+	 * @param strTheme The theme array that holds the name of files used to draw the themes
+	 */
 	public String[] getTheme(String strTheme){
 		String[] themeArray = new String[5];
 		InputStream txtClass = null;
@@ -69,14 +82,18 @@ class calculations{
 		return themeArray;
 	}
 
-	//Printing board array for testing 
+	/**Prints theme array for testing
+	 * @param themeArray Array that holds names of the files used to draw a theme
+	 */
 		public void printThemeArray(String[] themeArray){
 		for (int intCount = 0; intCount < 5; intCount++){
 			System.out.println(themeArray[intCount]);
 		}
 	}
 	
-	//Printing board array for testing 
+	/**Prints game board array for testing
+	 * @param intBoard[][] Game board array that holds information regarding how the board is filled up
+	 */
 	public void printBoard(int intBoard[][]){
 		for(int intCount = 0; intCount <6; intCount++){
 			for(int intCount2 = 0; intCount2 <7; intCount2++){
@@ -87,6 +104,11 @@ class calculations{
 	}
 
 	//Method checks if position is within range of game board 
+	/**Checks if the position the player dropped their piece is within the boards coordinates
+	 * @return A boolean that indicates if thier piece was within board coordinate bound or not
+	 * @param intY Y-coordinate of piece
+	 * @param intX X-coordinate of piece
+	 */
 	public boolean position(int intX, int intY){
 		int intXMin = 390; 
 		int intXMax = 500; 
@@ -101,6 +123,9 @@ class calculations{
 		return false;
 	}
 	//Method places piece on board by adjusting board array values accordingly
+	/**Method adjusts game board array according to where the piece was placed by user
+	 * @return Newly updated board array 
+	 */
 	public int[][] place(){
 		for(int intCount =5; intCount >= 0; intCount--){
 			if(intBoard[intRow][intCount] == 0){
@@ -113,21 +138,33 @@ class calculations{
 	}
 	
 	//Method resets game by reinitializing the board and setting player turn to 0
+	/**Method reinitializes the board and sets the player turn to 0 to reset the game 
+	 */
 	public void resetGame(){
 		initializeboard();
 		intCurrentPlayerTurn = 0;
 		getPlayer();
 	}
 	//Method returns the current player turn
+	/**Method access the current player turn
+	 * @return Current player turn
+	 */
 	public int getPlayerTurn(){
 		return intCurrentPlayerTurn;
 	}
+	
+	/**Method access the board array 
+	 * @return Board array
+	 */
 	public int[][] getBoard(){
 		return intBoard;
 	}
 	
 	//Method returns back value for what player it is based on if the current player turn is divisible by 2 
 	//Method also sets the intPiece value in accordance to player so that when it fills array it corresponds to the right player 
+	/**Method determines which piece and whos turn it is based on if the current player turn is divisible by 2
+	 * @return Username of the players who's turn it is
+	 */
 	public String getPlayer(){
 		if(intCurrentPlayerTurn % 2 == 0){
 			//Player 1 (RED)
@@ -143,6 +180,8 @@ class calculations{
 
 	//Accessible within only in the program, this method increases the player turn and then calculates whos turn it is by using modulus 
 	//Method also sets the intPiece variable to correspond with "piece" value for each player
+	/**Method determines which player just complleted their turn and adjusts pieces and data for next players turn
+	 */
 	private void switchPlayer(){
 		intCurrentPlayerTurn++;
 		if(intCurrentPlayerTurn % 2 == 0){
@@ -157,6 +196,9 @@ class calculations{
 	}
 	//Checks array for 4 in a row Horizontal
 	//Returns the player number for the player that does have four in a row or returns 0 if there is no 4 horizontally in a row
+	/**Method undergoes calculations on board array to see if their are four of one players pieces horizontally in a row
+	 * @return A string that indicates the number of the player that won, or if no winner, 0.
+	 */
 	public String HorizontalCheckWin(){
 		// intCount2 = horizontal array 
 		String strRow ="    ";
@@ -181,6 +223,9 @@ class calculations{
 		return "0";
 	}
 	//Checks if there is a tie by seeing if every part of the array has a non-zero value
+	/**Method checks if there is a tie by seeing if every index of board array has a non-zero value
+	 * @return A boolean that describes if there is a tie or not
+	 */
 	public boolean CheckTie(){
 		String strCheck = "";
 		for(int intRow = 0; intRow <6; intRow++){
@@ -196,6 +241,9 @@ class calculations{
 	
 	//Checks array for 4 in a row Vertical
 	//Returns the player number if they have 4 in a row or returns 0 if there is no 4 vertically in a row
+	/**Method undergoes calculations on board array to see if their are four of one players pieces vertically in a row
+	 * @return A string that indicates the number of the player that won, or if no winner, 0.
+	 */
 	public String VerticalCheckWin(){
 		// intCount2 = horizontal array 
 		String strRow ="    ";
@@ -222,6 +270,9 @@ class calculations{
 		return "0";
 	}
 	//Checks for Diagonal 
+	/**Method udnergoes calculations on board array to see if their are four of one players pieces vertically in a row
+	 * @return A string that indicates the number of the player that won, or if no winner, 0.
+	 */
 	public String DiagonalCheckWin() {
 		//Check for diagonal win from bottom-left to top-right
 		String strInRow = "    ";
@@ -253,6 +304,9 @@ class calculations{
 		return "0"; // No diagonal win found
 	}
 	//Method returns the string of player number dependent on the check values 
+	/**Method returns either "player 1" or "player 2" dependent on who won 
+	 * @return A string that describes which player won or if there was a tie
+	 */
 	public String checkResult(){
 		if(DiagonalCheckWin().equals("1")){
 			return "Player 1";
@@ -272,6 +326,9 @@ class calculations{
 		return "0";
 	}
 	//Load Interactive Help Demo 
+	/**Method loads the interactive help demonstration 
+	 * @return The demonstration board array
+	 */
 	public int[][] loadDemoBoard(){
 		int[][] Demoboard = new int[7][6];
 		InputStream txtClass = null;
@@ -312,7 +369,10 @@ class calculations{
 		}
 		return Demoboard;
 	}
+	
 	//Constructor
+	/**Constructs the calculations class object 
+	 */
 	public calculations(){
 	}
 }
