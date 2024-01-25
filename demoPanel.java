@@ -4,11 +4,9 @@ import java.awt.image.*;
 import java.io.*;
 import javax.imageio.*;
 
-
 public class demoPanel extends JPanel{
-	/**properties 
-	 * @return hi
-	 */
+	//Properties
+	//Moving the piece
 	int intPressedX = -0;
 	int intPressedY = -0; 
 	int intDraggedX = -1000;
@@ -24,7 +22,7 @@ public class demoPanel extends JPanel{
 	int intArrowX = 150;
 	int intDefArrowX = 0;
 	
-	//Theme variables 
+	//Image variables 
 	BufferedImage imgbackground = null;
 	BufferedImage imgPlayer1 = null;
 	BufferedImage imgPlayer2 = null;
@@ -38,10 +36,9 @@ public class demoPanel extends JPanel{
 	BufferedImage img4 = null;
 	String[] strTheme = {"","","","",""};
 	
+	//Game variables
 	int intBoard[][];
 	int intSeconds = 0;
-	
-	
 	boolean blnWin = false;
 	
 	public void paintComponent(Graphics g){
@@ -50,10 +47,10 @@ public class demoPanel extends JPanel{
 		g.drawImage(imgBoard, 500, 100, null);
 	
 		//Draw red and yellow piece at resting place
-		g.drawImage(imgPlayer1,intRedX, intRedY, null);
+		g.drawImage(imgPlayer1, intRedX, intRedY, null);
 		g.drawImage(imgPlayer2, intYellowX, intYellowY, null);
 		
-		//prints gameboard
+		//Prints gameboard
 		g.setColor(Color.WHITE);
 		int intX = 400;
 		int intY = 10;
@@ -66,12 +63,9 @@ public class demoPanel extends JPanel{
 					g.fillOval(intX,intY, 90, 90);
 				}else if(intBoard[intCount][intCount2] == 1){
 					g.drawImage(imgPlayer1, intX, intY, null);
-					
 				}else if(intBoard[intCount][intCount2] == 2){
-					g.drawImage(imgPlayer2, intX, intY, null);
-					
+					g.drawImage(imgPlayer2, intX, intY, null);	
 				}
-				
 			}
 			intY = 10;
 		}
@@ -86,10 +80,8 @@ public class demoPanel extends JPanel{
 			g.drawImage(imgPlayer1, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
 			blnPlaced = true;
 		}
-
 		int intXMin = 390; 
 		int intXMax = 500; 
-		
 		//For loop to draw highlight depending on coordinates of where the player has dragged their piece
 		for(int intCount = 0; intCount < 7; intCount++){
 			intXMin = intXMin + 110;
@@ -99,7 +91,7 @@ public class demoPanel extends JPanel{
 				g.drawImage(imgHighlight, intXMin, 0, null);
 			}
 		}
-		//System.out.println(intArrowX);
+		//Draws moving arrow
 		if(blnWin == false){
 			if (intArrowX >200){
 				intDefArrowX = -2;
@@ -109,6 +101,7 @@ public class demoPanel extends JPanel{
 			intArrowX = intArrowX + intDefArrowX;
 			g.drawImage(imgArrow, intArrowX, 220, null);
 		}
+		//Counts the pieces in a row
 		if (blnWin == true){
 			if(intSeconds >= 1){
 				g.drawImage(img1, 500, 0, null);
@@ -119,10 +112,7 @@ public class demoPanel extends JPanel{
 			}if(intSeconds >= 4){
 				g.drawImage(img4, 830, 0, null);
 			}
-			
 		}
-		
-		
 		//Drawing lines to split up columns
 		g.setColor(Color.GRAY);
 		g.fillRect(500,0,1,800);
@@ -133,13 +123,11 @@ public class demoPanel extends JPanel{
 		g.fillRect(1050,0,1,800);
 		g.fillRect(1160,0,1,800);
 		g.fillRect(1270,0,1,800);
-		}
-		
+	}
 	//Method to load in all images based on theme array loaded in on calculations.java
 	public void loadTheme(String[] strTheme){
 		this.strTheme = strTheme;
 		System.out.println("loading new images");
-		
 		//Loading from Jar File
 		InputStream imageclass = null;
 		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[1]);
@@ -159,9 +147,7 @@ public class demoPanel extends JPanel{
 			}	
 		}
 		
-		
 		//Loading from Jar File
-
 		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[2]);
 		if(imageclass != null){
 			try{
@@ -180,7 +166,6 @@ public class demoPanel extends JPanel{
 		}
 		
 		//Loading from Jar File
-
 		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[3]);
 		if(imageclass != null){
 			try{
@@ -199,7 +184,6 @@ public class demoPanel extends JPanel{
 		}
 		
 		//Loading from Jar File
-
 		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[4]);
 		if(imageclass != null){
 			try{
@@ -218,7 +202,6 @@ public class demoPanel extends JPanel{
 		}
 		
 		//Loading from Jar File
-	
 		imageclass = this.getClass().getResourceAsStream("resources/arrow.png");
 		if(imageclass != null){
 			try{
@@ -237,7 +220,6 @@ public class demoPanel extends JPanel{
 		}
 		
 		//Loading from Jar File
-
 		imageclass = this.getClass().getResourceAsStream("resources/highlight.png");
 		if(imageclass != null){
 			try{
@@ -256,7 +238,6 @@ public class demoPanel extends JPanel{
 		} 
 		
 		//Loading from Jar File
-
 		imageclass = this.getClass().getResourceAsStream("resources/one.png");
 		if(imageclass != null){
 			try{
@@ -275,7 +256,6 @@ public class demoPanel extends JPanel{
 		}
 		
 		//Loading from Jar File
-	
 		imageclass = this.getClass().getResourceAsStream("resources/two.png");
 		if(imageclass != null){
 			try{
@@ -294,7 +274,6 @@ public class demoPanel extends JPanel{
 		}
 		
 		//Loading from Jar File
-
 		imageclass = this.getClass().getResourceAsStream("resources/three.png");
 		if(imageclass != null){
 			try{
@@ -308,7 +287,7 @@ public class demoPanel extends JPanel{
 			try{
 				img3 = ImageIO.read(new File("resources/three.png"));
 			}catch (IOException e){
-				System.out.println("cannot load image6");
+				System.out.println("cannot load image8");
 			}
 		} 
 		
@@ -321,13 +300,12 @@ public class demoPanel extends JPanel{
 				System.out.println("Unable to load image file from jar");
 			}
 		}
-		
 		//Trying to load image while catching IOexception 
 		if(imageclass==null){
 			try{
 				img4 = ImageIO.read(new File("resources/four.png"));
 			}catch (IOException e){
-				System.out.println("cannot load image6");
+				System.out.println("cannot load image9");
 			}
 		}
 		
@@ -344,7 +322,7 @@ public class demoPanel extends JPanel{
 			try{
 				imgbackground = ImageIO.read(new File("resources/demohelpscreen.png"));
 			}catch (IOException e){
-				System.out.println("cannot load image7");
+				System.out.println("cannot load image10");
 			}
 		}
 	}
@@ -352,33 +330,6 @@ public class demoPanel extends JPanel{
 	public demoPanel (String[] strTheme, int[][] intBoard){
 		this.strTheme = strTheme;
 		this.intBoard = intBoard;
-		//System.out.println("loading new images");
 		loadTheme(strTheme);
 	}
 }
-/* IDEAS FOR HOW THE GRID IS ORGANIZED
- * //Horizontal 
-	g.fillOval(510,610, 90, 90);
-	g.fillOval(620,610, 90, 90);
-	g.fillOval(730,610, 90, 90);
-	g.fillOval(840,610, 90, 90);
-	g.fillOval(950,610, 90, 90);
-	g.fillOval(1060,610, 90, 90);
-	g.fillOval(1170,610, 90, 90);
-	//Vertical 
-	g.fillOval(510,510, 90, 90);
-	g.fillOval(510,410, 90, 90);
-	g.fillOval(510,310, 90, 90);
-	g.fillOval(510,210, 90, 90);
-	g.fillOval(510,110, 90, 90);
-
-	g.setColor(Color.GRAY);
-	g.fillRect(500,0,1,800);
-	g.fillRect(610,0,1,800);
-	g.fillRect(720,0,1,800);
-	g.fillRect(830,0,1,800);
-	g.fillRect(940,0,1,800);
-	g.fillRect(1050,0,1,800);
-	g.fillRect(1160,0,1,800);
-	g.fillRect(1270,0,1,800);
-	*/

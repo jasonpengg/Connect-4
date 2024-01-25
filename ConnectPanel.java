@@ -104,10 +104,6 @@ public class ConnectPanel extends JPanel{
 	// override how JComponent is painted 
 	// Set the Red and Yellow pieces to coordinates 
 	
-	//"Space Theme"
-	//"Standard Theme"
-	//"Christmas Theme"
-	
 	/**Method paints the display of the board, "holes" in the board and all components on the gameplay panel
 	 */
 	public void paintComponent(Graphics g){
@@ -132,43 +128,35 @@ public class ConnectPanel extends JPanel{
 					g.fillOval(intX,intY, 90, 90);
 				}else if(intBoard[intCount][intCount2] == 1){
 					g.drawImage(imgPlayer1, intX, intY, null);
-					
 				}else if(intBoard[intCount][intCount2] == 2){
 					g.drawImage(imgPlayer2, intX, intY, null);
-					
 				}
-				
 			}
 			intY = 10;
 		}
-
 		//Player1
 		//If mouse is pressed within specific coordinates draw the checker where the player dragged the mouse
 		if(intPressedX >= (intRedX) && intPressedX <= (intRedX +90)&&intPressedY >= intRedY&& intPressedY <= (intRedY + 90) && blnPressed == true && blnRed == true){
-			//System.out.println("RED placed");
 			//To constantly draw the checker as if the mouse is "holding" it, we must calcualte the distance the mouse is from the top right of the image to accurately draw the image
 			intDiffX = intPressedX - intRedX;
 			intDiffY = intPressedY - intRedY;
 			//Drawing checker
 			g.drawImage(imgPlayer1, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
-			//System.out.println(intDraggedX +","+ intDiffX +","+ intDraggedY +","+ intDiffY);
 			blnPlaced = true;
 		}
 		//Player2
 		//If mouse is pressed within specific coordinates draw the checker where the player dragged the mouse
 		if(intPressedX >= (intYellowX) && intPressedX <= (intYellowX +90)&&intPressedY >= intYellowY&& intPressedY <= (intYellowY + 90) && blnPressed == true && blnYellow == true){
-			//System.out.println("Yellow placed");
 			//To constantly draw the checker as if the mouse is "holding" it, we must calcualte the distance the mouse is from the top right of the image to accurately draw the image
 			intDiffX = intPressedX - intYellowX;
 			intDiffY = intPressedY - intYellowY;
+			//Drawing checker
 			g.drawImage(imgPlayer2, intDraggedX - intDiffX, intDraggedY - intDiffY, null);
-			//System.out.println(intDraggedX +","+ intDiffX +","+ intDraggedY +","+ intDiffY);
 			blnPlaced = true;
 		}
 
 		int intXMin = 390; 
 		int intXMax = 500; 
-		
 		//For loop to draw highlight depending on coordinates of where the player has dragged their piece
 		for(int intCount = 0; intCount < 7; intCount++){
 			intXMin = intXMin + 110;
@@ -214,7 +202,6 @@ public class ConnectPanel extends JPanel{
 	public void loadTheme(String[] strTheme){
 		this.strTheme = strTheme;
 		System.out.println("loading new images");
-		
 		//Loading from Jar File
 		InputStream imageclass = null;
 		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[1]);
@@ -234,7 +221,6 @@ public class ConnectPanel extends JPanel{
 			}
 		}
 		
-		
 		//Loading from Jar File 
 		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[2]);
 		if(imageclass != null){
@@ -252,6 +238,7 @@ public class ConnectPanel extends JPanel{
 				System.out.println("cannot load image2");
 			}
 		}
+		
 		//Loading from Jar File 
 		imageclass = this.getClass().getResourceAsStream("resources/"+strTheme[3]);
 		if(imageclass != null){
@@ -287,6 +274,7 @@ public class ConnectPanel extends JPanel{
 				System.out.println("cannot load image4");
 			}
 		}
+		
 		//Loading from Jar File 
 		imageclass = this.getClass().getResourceAsStream("resources/arrow.png");
 		if(imageclass != null){
@@ -297,7 +285,7 @@ public class ConnectPanel extends JPanel{
 			}
 		}
 		//Trying to load image while catching IOException 
-		if(imageclass==null){
+		if(imageclass == null){
 			try{
 				imgArrow = ImageIO.read(new File("resources/arrow.png"));
 			}catch (IOException e){
@@ -332,29 +320,3 @@ public class ConnectPanel extends JPanel{
 		loadTheme(strTheme);
 	}
 }
-/* IDEAS FOR HOW THE GRID IS ORGANIZED
- * //Horizontal 
-	g.fillOval(510,610, 90, 90);
-	g.fillOval(620,610, 90, 90);
-	g.fillOval(730,610, 90, 90);
-	g.fillOval(840,610, 90, 90);
-	g.fillOval(950,610, 90, 90);
-	g.fillOval(1060,610, 90, 90);
-	g.fillOval(1170,610, 90, 90);
-	//Vertical 
-	g.fillOval(510,510, 90, 90);
-	g.fillOval(510,410, 90, 90);
-	g.fillOval(510,310, 90, 90);
-	g.fillOval(510,210, 90, 90);
-	g.fillOval(510,110, 90, 90);
-
-	g.setColor(Color.GRAY);
-	g.fillRect(500,0,1,800);
-	g.fillRect(610,0,1,800);
-	g.fillRect(720,0,1,800);
-	g.fillRect(830,0,1,800);
-	g.fillRect(940,0,1,800);
-	g.fillRect(1050,0,1,800);
-	g.fillRect(1160,0,1,800);
-	g.fillRect(1270,0,1,800);
-	*/

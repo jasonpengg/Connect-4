@@ -37,8 +37,8 @@ class calculations{
 					strInput = themeReader.readLine();
 					//StrInput will contain an extra line or null if its at the end 
 				}
-					//closing reader
-					themeReader.close();
+				//closing reader
+				themeReader.close();
 			//Catching exception 
 			}catch(IOException e){
 				e.printStackTrace();
@@ -58,8 +58,8 @@ class calculations{
 					strInput = themeReader.readLine();
 					//StrInput will contain an extra line or null if its at the end 
 				}
-					//closing filereader
-					themeReader.close();
+				//closing filereader
+				themeReader.close();
 			//catching exception 
 			}catch(IOException e){
 				e.printStackTrace();
@@ -69,7 +69,6 @@ class calculations{
 		return themeArray;
 	}
 
-	
 	//Printing board array for testing 
 		public void printThemeArray(String[] themeArray){
 		for (int intCount = 0; intCount < 5; intCount++){
@@ -110,7 +109,6 @@ class calculations{
 				break;
 			}
 		}
-
 		return intBoard;
 	}
 	
@@ -180,7 +178,6 @@ class calculations{
 				}
 			}
 		}
-		
 		return "0";
 	}
 	//Checks if there is a tie by seeing if every part of the array has a non-zero value
@@ -226,11 +223,11 @@ class calculations{
 	}
 	//Checks for Diagonal 
 	public String DiagonalCheckWin() {
-		// Check for diagonal win from bottom-left to top-right
+		//Check for diagonal win from bottom-left to top-right
 		String strInRow = "    ";
 		for (int intColumn = 0; intColumn < 4; intColumn++) {
 			strInRow = "";
-		for (int intRow = 0; intRow < 3; intRow++) {
+			for (int intRow = 0; intRow < 3; intRow++) {
 				strInRow = "" + intBoard[intColumn][intRow]+intBoard[intColumn+1][intRow+1]+intBoard[intColumn+2][intRow+2]+intBoard[intColumn+3][intRow+3];
 				if (strInRow.equals("1111")){
 					return "1";
@@ -239,15 +236,14 @@ class calculations{
 				}
 			}
 		}
-
 		//Check for diagonal win from bottom-right to top-left
 		//If a player has four in a row return their player number but if no player has 4 in a row return 0 
-		for (int intColumn = 3; intColumn < 7; intColumn++) {
+		for(int intColumn = 3; intColumn < 7; intColumn++) {
 			strInRow = "";
-			for (int intRow = 0; intRow < 3; intRow++) {
+			for(int intRow = 0; intRow < 3; intRow++) {
 				strInRow = "";
 				strInRow = "" + intBoard[intColumn][intRow]+intBoard[intColumn-1][intRow+1]+intBoard[intColumn-2][intRow+2]+intBoard[intColumn-3][intRow+3];
-			if (strInRow.equals("1111")){
+				if (strInRow.equals("1111")){
 					return "1";
 				}else if (strInRow.equals("2222")){
 					return "2";
@@ -285,7 +281,7 @@ class calculations{
 				BufferedReader boardReader = new BufferedReader(new InputStreamReader(txtClass));
 				String strLine ="";
 				String[] strSplit;
-				for (int intColumn =0; intColumn < 6; intColumn++){
+				for(int intColumn =0; intColumn < 6; intColumn++){
 					strLine = boardReader.readLine();
 					strSplit = strLine.split(",");
 					for (int introw = 0; introw <7; introw++){
