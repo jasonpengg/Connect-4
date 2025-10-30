@@ -1,8 +1,6 @@
 import java.awt.*;
-import javax.swing.*;
 import java.awt.event.*;
-import javax.swing.event.*;
-import java.io.*;
+import javax.swing.*;
 
 public class Connect4 implements ActionListener, MouseListener, MouseMotionListener{
 	
